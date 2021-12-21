@@ -32,6 +32,9 @@ builder.Services.AddHttpClient();
 // Register our TMDBMovieService
 builder.Services.AddScoped<IRemoteMovieService, TMDBMovieService>();
 
+// Register our TMDBMappingService
+builder.Services.AddScoped<IDataMappingService, TMDBMappingService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
