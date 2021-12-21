@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieProMVC.Data;
 using MovieProMVC.Models.Settings;
 using MovieProMVC.Services;
+using MovieProMVC.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,12 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 
 // Register our SeedService
 builder.Services.AddTransient<SeedService>();
+
+// Register HttpClient since is used by TMDBMovieService
+builder.Services.AddHttpClient();
+
+// Register our TMDBMovieService
+builder.Services.AddScoped<IRemoteMovieService, TMDBMovieService>();
 
 var app = builder.Build();
 
