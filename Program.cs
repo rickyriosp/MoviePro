@@ -35,6 +35,9 @@ builder.Services.AddScoped<IRemoteMovieService, TMDBMovieService>();
 // Register our TMDBMappingService
 builder.Services.AddScoped<IDataMappingService, TMDBMappingService>();
 
+// Register our BasicImageService
+builder.Services.AddSingleton<IImageService, BasicImageService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
