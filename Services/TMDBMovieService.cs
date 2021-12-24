@@ -82,7 +82,7 @@ namespace MovieProMVC.Services
             return movieDetail;
         }
 
-        public async Task<MovieSearch> SearchMovieAsync(MovieCategory category, int count)
+        public async Task<MovieSearch> SearchMoviesAsync(MovieCategory category, int count)
         {
             // Step 1: Setup a default instance of MovieSearch
             MovieSearch movieSearch = new();

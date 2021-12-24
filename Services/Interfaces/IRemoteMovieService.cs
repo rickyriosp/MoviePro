@@ -6,7 +6,7 @@ namespace MovieProMVC.Services.Interfaces
     public interface IRemoteMovieService
     {
         Task<MovieDetail> MovieDetailAsync(int id);
-        Task<MovieSearch> SearchMovieAsync(MovieCategory category, int count);
         Task<ActorDetail> ActorDetailAsync(int id);
+        Task<MovieSearch> SearchMoviesAsync(MovieCategory category, int count);
     }
 }
