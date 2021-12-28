@@ -33,19 +33,36 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Movies/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, bool local = false)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Movie movie = new();
+
+            if (local is true)
+            {
+                // Get the Movie data straight from the DB
+                movie = await _context.Movie
+                    .Include(m => m.Cast)
+                    .Include(m => m.Crew)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+            }
+            else
+            {
+                // Get the Movie data from the TMDB API
+                var movieDetail = await _tmdbMovieService.MovieDetailAsync((int)id);
+                movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
+            }
+            
             if (movie == null)
             {
                 return NotFound();
             }
+
+            ViewData["Local"] = local;
 
             return View(movie);
         }
