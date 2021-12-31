@@ -1,0 +1,142 @@
+﻿@using MovieProMVC.Models.Database
+@using MovieProMVC.Services.Interfaces
+
+@inject IImageService _imageService;
+@model Movie;
+
+@{
+    ViewData["Title"] = "MoviePro";
+}
+
+<div class="row gy-3">
+    <div class="col-sm-12 col-md-6">
+        <div class="row">
+            <img src="@_imageService.DecodeImage(Model.Poster, Model.PosterType)" class="w-100" alt="Movie Poster" />
+        </div>
+
+        <div class="row">
+            <div class="d-grid">
+                <button class="btn btn-lg btn-danger fw-bold" data-bs-toggle="modal" data-bs-target="#trailer"> WATCH TRAILER</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6">
+        <div class="row">
+            <div class="col h5">
+                <span class="fw-bolder mr-2">TITLE: </span> @Model.Title
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col h5">
+                <span class="fw-bolder mr-2">RELEASED: </span> @Model.ReleaseDate.ToString("MMM, ddd, yyyy")
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col h5">
+                <span class="fw-bolder mr-2">RATING: </span> @Model.Rating
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col h5">
+                <span class="fw-bolder mr-2">REVIEWS: </span> @Model.VoteAverage / 10
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row mt-3 mb-2">
+            <div class="col h5">
+                <span class="fw-bolder mr-2">OVERVIEW:</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col h5">
+                <span class="ml-4">@Model.Overview</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col mt-3">
+        <span class="h5 fw-bolder">STARRING:</span>
+    </div>
+</div>
+
+@foreach (var actor in Model.Cast.Take(5))
+{
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                        <img src="@actor.ImageUrl" class="img-fluid" style="width: 10rem" alt="Actor Image" />
+                    </div>
+                    <div class="col-md-10">
+                        <div class="card-body">
+                            <h5 class="card-title">Name: @actor.Name</h5>
+                            <p class="card-text">Character: @actor.Character</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="trailer" tabindex="-1" aria-labelledby="trailerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="trailerLabel">@Model.Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ratio ratio-16x9">
+                    @{
+                        // I am isolating a piece of data in order to use it as my embed source
+                        var key = Model.TrailerUrl.Split("=").Last();
+                        var source = $"https://www.youtube.com/embed/{key}?enablejsapi=1";
+                    }
+
+                    <iframe id="player" width="560" height="315" src="@source" title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+<script>
+    var player;
+    function onYouTubeIframeAPIReady() {player = new YT.Player('player');}
+    //so on jquery event or whatever call the play or stop on the video.
+    //to play player.playVideo();
+    //to pause player.pauseVideo();
+    //to stop player.stopVideo();
+
+    var myModalEl = document.getElementById('trailer')
+    myModalEl.addEventListener('hidden.bs.modal', function (event) {
+      // do something...
+      player.pauseVideo();
+    })
+</script>
+}
