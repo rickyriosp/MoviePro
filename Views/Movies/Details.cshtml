@@ -5,7 +5,7 @@
 @model Movie;
 
 @{
-    ViewData["Title"] = "MoviePro";
+    ViewData["Title"] = "MovieDetail";
 }
 
 <div class="row gy-3">
@@ -85,7 +85,7 @@
                     </div>
                     <div class="col-md-10">
                         <div class="card-body">
-                            <h5 class="card-title">Name: @actor.Name</h5>
+                            <h5 class="card-title h5"><a asp-action="Details" asp-controller="Actors" asp-route-id="@actor.CastId">Name: @actor.Name</a></h5>
                             <p class="card-text">Character: @actor.Character</p>
                         </div>
                     </div>

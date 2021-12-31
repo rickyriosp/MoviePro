@@ -1,0 +1,36 @@
+﻿@using MovieProMVC.Models.TMDB
+
+@model ActorDetail;
+
+@{
+    ViewData["Title"] = "ActorDetail";
+}
+
+
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        <img class="img-fluid" src="@Model.profile_path" alt="Actor Image">
+    </div>
+    <div class="col-sm-12 col-md-8">
+        <div class="row">
+            <table class="table table-hover table-responsive">
+                <tr>
+                    <td>Name:</td>
+                    <td>@Model.name</td>
+                </tr>
+                <tr>
+                    <td>Biography:</td>
+                    <td>@Model.biography</td>
+                </tr>
+                <tr>
+                    <td>Birthday:</td>
+                    <td>@Model.birthday</td>
+                </tr>
+                <tr>
+                    <td>Place of birth:</td>
+                    <td>@Model.place_of_birth</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
