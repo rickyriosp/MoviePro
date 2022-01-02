@@ -2,11 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MovieProMVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>@ViewData["Title"] – Online Movies & TV Shows Reviews</title>
+
+    <!-- FontAwesome JS -->
+    <script defer src="~/fontawesome/js/all.js"></script>
+
+    <!-- CSS -->
+    @*
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    *@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MovieProMVC.styles.css" asp-append-version="true" />
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="~/css/nouislider.min.css">
+    <link rel="stylesheet" href="~/css/plyr.css">
+    <link rel="stylesheet" href="~/css/photoswipe.css">
+    <link rel="stylesheet" href="~/css/default-skin.css">
+    <link rel="stylesheet" href="~/css/main.css">
+
 </head>
 <body>
     <header>
@@ -31,20 +50,206 @@
             </div>
         </nav>
     </header>
+
+    <!-- header -->
+    <header class="header">
+        <div class="header__wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="header__content">
+                            <!-- header logo -->
+                            <a asp-controller="Home" asp-action="Index" class="header__logo">
+                                <img src="~/img/MovieProLogo-Dark.png" alt="MoviePro Logo">
+                            </a>
+                            <!-- end header logo -->
+                            <!-- header nav -->
+                            <ul class="header__nav">
+                                <li class="header__nav-item">
+                                    <a asp-controller="Home" asp-action="Index" class="header__nav-link">Home</a>
+                                </li>
+                                <!-- dropdown -->
+                                <li class="header__nav-item">
+                                    <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Movies <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z" /></svg></a>
+
+                                    <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
+                                        <li><a asp-controller="Movies" asp-action="Popular">Popular</a></li>
+                                        <li><a asp-controller="Movies" asp-action="NowPlaying">Now Playing</a></li>
+                                        <li><a asp-controller="Movies" asp-action="Upcoming">Upcoming</a></li>
+                                        <li><a asp-controller="Movies" asp-action="TopRated">Top Rated</a></li>
+                                    </ul>
+                                </li>
+                                <!-- end dropdown -->
+                                <!-- dropdown -->
+                                <li class="header__nav-item">
+                                    <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">TV Shows <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z" /></svg></a>
+
+                                    <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
+                                        <li><a asp-controller="Shows" asp-action="Popular">Popular</a></li>
+                                        <li><a asp-controller="Shows" asp-action="AiringToday">Airing Today</a></li>
+                                        <li><a asp-controller="Shows" asp-action="OnTV">On TV</a></li>
+                                        <li><a asp-controller="Shows" asp-action="TopRated">Top Rated</a></li>
+                                    </ul>
+                                </li>
+                                <!-- end dropdown -->
+                                <!-- dropdown -->
+                                <li class="header__nav-item">
+                                    <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">People <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z" /></svg></a>
+
+                                    <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
+                                        <li><a asp-controller="Actors" asp-action="Popular">Popular</a></li>
+                                    </ul>
+                                </li>
+                                <!-- end dropdown -->
+                                <!-- dropdown -->
+                                <li class="header__nav-item">
+                                    <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z" /></svg></a>
+
+                                    <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
+                                        <li><a href="catalog1.html">Catalog Grid</a></li>
+                                        <li><a href="catalog2.html">Catalog List</a></li>
+                                        <li><a href="details1.html">Details Movie</a></li>
+                                        <li><a href="details2.html">Details TV Series</a></li>
+                                    </ul>
+                                </li>
+                                <!-- end dropdown -->
+
+                                <!-- dropdown -->
+                                <li class="dropdown header__nav-item">
+                                    <a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z" /></svg>
+                                    </a>
+
+                                    <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
+                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="profile.html">Profile</a></li>
+                                        <li><a href="signin.html">Sign In</a></li>
+                                        <li><a href="signup.html">Sign Up</a></li>
+                                        <li><a href="forgot.html">Forgot password</a></li>
+                                        <li><a href="privacy.html">Privacy Policy</a></li>
+                                        <li><a href="contacts.html">Contacts</a></li>
+                                        <li><a href="404.html">404 Page</a></li>
+                                    </ul>
+                                </li>
+                                <!-- end dropdown -->
+                            </ul>
+                            <!-- end header nav -->
+                            <!-- header auth -->
+                            <div class="header__auth">
+                                <button class="header__search-btn" aria-label="search btn" type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z" /></svg>
+                                </button>
+
+                                <!-- dropdown -->
+                                @*<div class="dropdown header__lang">
+                                    <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuLang" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EN</a>
+
+                                    <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuLang">
+                                        <li><a href="#">English</a></li>
+                                        <li><a href="#">Spanish</a></li>
+                                        <li><a href="#">Russian</a></li>
+                                    </ul>
+                                </div>*@
+                                <!-- end dropdown -->
+
+                                <a href="signin.html" class="header__sign-in">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,12a1,1,0,0,0-1-1H11.41l2.3-2.29a1,1,0,1,0-1.42-1.42l-4,4a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l4,4a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L11.41,13H19A1,1,0,0,0,20,12ZM17,2H7A3,3,0,0,0,4,5V19a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V16a1,1,0,0,0-2,0v3a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V8a1,1,0,0,0,2,0V5A3,3,0,0,0,17,2Z" /></svg>
+                                    <span>sign in</span>
+                                </a>
+                            </div>
+                            <!-- end header auth -->
+                            <!-- header menu btn -->
+                            <button class="header__btn" type="button">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <!-- end header menu btn -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- header search -->
+        <form action="#" class="header__search">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="header__search-content">
+                            <input type="text" placeholder="I'm looking for...">
+                            <button type="button">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- end header search -->
+    </header>
+    <!-- end header -->
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer">
         <div class="container">
-            &copy; 2021 - MovieProMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                 <!-- footer list -->
+			    <div class="col-12">
+				    <img class="mx-auto d-block" src="~/img/MovieProLogo-Dark.png" alt="MoviePro Logo">
+			    </div>
+			    <!-- end footer list -->
+
+                <!-- footer copyright -->
+                <div class="col-12">
+                    <div class="footer__copyright">
+                        <small>&copy; 2021 - MoviePro. Created by <a href="https://riosr.com" target="_blank" rel="noopener">Ricky Rios</a>.</small>
+
+                        <!-- footer list -->
+                        <ul class="footer__social">
+					        <li class="github"><a href="https://github.com/rickyriosp" target="_blank"><i class="fab fa-github-alt fa-fw" style="color: indianred"></i></a></li>
+					        <li class="linkedin"><a href="https://www.linkedin.com/in/rickyriosp/" target="_blank"><i class="fab fa-linkedin-in fa-fw" style="color: indianred"></i></a></li>
+					        <li class="twitter"><a href="https://twitter.com/rickyriosp" target="_blank"><i class="fab fa-twitter fa-fw" style="color: indianred"></i></a></li>
+					        <!-- <li class="stackoverflow"><a href="#" target="_blank"><i class="fab fa-stack-overflow fa-fw" style="color: indianred"></i></a></li> -->
+					        <!-- <li class="codepen"><a href="#" target="_blank"><i class="fab fa-codepen fa-fw" style="color: indianred"></i></a></li> -->
+				        </ul><!--//social-list-->
+                        <!-- end footer list -->
+
+                        <ul>
+                            <li><a asp-controller="Home" asp-action="Privacy">Terms of Use</a></li>
+                            <li><a asp-controller="Home" asp-action="Privacy">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- end footer copyright -->
+            </div>
         </div>
     </footer>
+
+    <!-- JS -->
+    @*
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    *@
+
+    <!-- Template JS -->
+    <script src="~/js/jquery-3.6.0.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.mousewheel.min.js"></script>
+    <script src="~/js/jquery.mCustomScrollbar.min.js"></script>
+    <script src="~/js/wNumb.js"></script>
+    <script src="~/js/nouislider.min.js"></script>
+    <script src="~/js/plyr.min.js"></script>
+    <script src="~/js/jquery.morelines.min.js"></script>
+    <script src="~/js/photoswipe.min.js"></script>
+    <script src="~/js/photoswipe-ui-default.min.js"></script>
+    <script src="~/js/main.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
