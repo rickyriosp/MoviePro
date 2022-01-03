@@ -34,7 +34,8 @@ namespace MovieProMVC.Controllers
                 Popular = await _tmdbMovieService.SearchMoviesAsync(Enums.MovieCategory.popular, count),
                 TopRated = await _tmdbMovieService.SearchMoviesAsync(Enums.MovieCategory.top_rated, count),
                 Upcoming = await _tmdbMovieService.SearchMoviesAsync(Enums.MovieCategory.upcoming, count),
-                Genres = await _tmdbMovieService.GetMovieGenresAsync(),
+                Trending = await _tmdbMovieService.SearchMoviesTrendingAsync(count),
+                Genres = await _tmdbMovieService.GetAllMovieGenresAsync(),
         };
 
             return View(data);

@@ -116,7 +116,39 @@ namespace MovieProMVC.Services
             return movieSearch;
         }
 
-        public async Task<Genres> GetMovieGenresAsync()
+        public async Task<MovieSearch> SearchMoviesTrendingAsync(int count)
+        {
+            // Step 1: Setup a default instance of MovieSearch
+            MovieSearch movieSearch = new();
+
+            // Step 2: Assemble the full request uri string
+            var query = $"{_appSettings.TMDBSettings.BaseUrl}/trending/movie/day";
+            var queryParams = new Dictionary<string, string>()
+            {
+                { "api_key", _appSettings.MovieProSettings.TmdbApiKey },
+            };
+
+            var requestUri = QueryHelpers.AddQueryString(query, queryParams);
+
+            // Step 3: Create a client and execute the request
+            var client = _httpClient.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            var response = await client.SendAsync(request);
+
+            // Step 4: Deserialize and return the MovieSearch object
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                var dcjs = new DataContractJsonSerializer(typeof(MovieSearch));
+                movieSearch = (MovieSearch)dcjs.ReadObject(responseStream);
+                movieSearch.results = movieSearch.results.Take(count).ToArray();
+                movieSearch.results.ToList().ForEach(result => result.poster_path = $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.MovieProSettings.DefaultPosterSize}/{result.poster_path}");
+            }
+
+            return movieSearch;
+        }
+
+        public async Task<Genres> GetAllMovieGenresAsync()
         {
             // Step 1: Setup a default instance of Genres
             Genres movieGenres = new();
