@@ -32,7 +32,7 @@ namespace MovieProMVC.Services
                 { "language", _appSettings.TMDBSettings.QueryOptions.Language}
             };
 
-            var requestUri = QueryHelpers.AddQueryString(query, queryParams!);
+            var requestUri = QueryHelpers.AddQueryString(query, queryParams);
 
             // Step 3: Create a client and execute the request
             var client = _httpClient.CreateClient();
@@ -64,7 +64,7 @@ namespace MovieProMVC.Services
                 { "append_to_response", _appSettings.TMDBSettings.QueryOptions.AppendToResponse }
             };
 
-            var requestUri = QueryHelpers.AddQueryString(query, queryParams!);
+            var requestUri = QueryHelpers.AddQueryString(query, queryParams);
 
             // Step 3: Create a client and execute the request
             var client = _httpClient.CreateClient();
@@ -96,7 +96,7 @@ namespace MovieProMVC.Services
                 { "page", _appSettings.TMDBSettings.QueryOptions.Page }
             };
 
-            var requestUri = QueryHelpers.AddQueryString(query, queryParams!);
+            var requestUri = QueryHelpers.AddQueryString(query, queryParams);
 
             // Step 3: Create a client and execute the request
             var client = _httpClient.CreateClient();
@@ -114,6 +114,49 @@ namespace MovieProMVC.Services
             }
 
             return movieSearch;
+        }
+
+        public async Task<Genres> GetMovieGenresAsync()
+        {
+            // Step 1: Setup a default instance of Genres
+            Genres movieGenres = new();
+
+            // Step 2: Assemble the full request uri string
+            var query = $"{_appSettings.TMDBSettings.BaseUrl}/genre/movie/list";
+            var queryParams = new Dictionary<string, string>()
+            {
+                { "api_key", _appSettings.MovieProSettings.TmdbApiKey },
+                { "language", _appSettings.TMDBSettings.QueryOptions.Language},
+            };
+
+            var requestUri = QueryHelpers.AddQueryString(query, queryParams);
+
+            // Step 3: Create a client and execute the request
+            var client = _httpClient.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            var response = await client.SendAsync(request);
+
+            // Step 4: Deserialize and return the MovieSearch object
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                var dcjs = new DataContractJsonSerializer(typeof(Genres));
+                movieGenres = (Genres)dcjs.ReadObject(responseStream);
+            }
+
+            return movieGenres;
+        }
+
+        public async Task<List<string>> GetMovieGenresByIdAsync(Genres allGenres, int[] genresId)
+        {
+            var movieGenres = new List<string>();
+
+            foreach (var genreId in genresId)
+            {
+                movieGenres.Add(allGenres.genres.ToList().FirstOrDefault(g => g.id == genreId).name);
+            }
+
+            return movieGenres;
         }
     }
 }

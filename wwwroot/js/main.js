@@ -38,7 +38,7 @@ $(document).ready(function () {
 		mouseDrag: false,
 		touchDrag: false,
 		items: 1,
-		dots: true,
+		dots: false,
 		loop: true,
 		autoplay: true,
 		autoplayTimeout: 5000,
@@ -61,7 +61,7 @@ $(document).ready(function () {
 	$('.home__carousel').owlCarousel({
 		mouseDrag: false,
 		touchDrag: false,
-		dots: true,
+		dots: false,
 		loop: true,
 		autoplay: true,
 		autoplayTimeout: 5000,
