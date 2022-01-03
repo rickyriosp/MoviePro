@@ -38,9 +38,11 @@ $(document).ready(function () {
 		mouseDrag: false,
 		touchDrag: false,
 		items: 1,
-		dots: false,
+		dots: true,
 		loop: true,
-		autoplay: false,
+		autoplay: true,
+		autoplayTimeout: 5000,
+		autoplayHoverPause: true,
 		smartSpeed: 700,
 		margin: 0,
 	});
@@ -59,11 +61,14 @@ $(document).ready(function () {
 	$('.home__carousel').owlCarousel({
 		mouseDrag: false,
 		touchDrag: false,
-		dots: false,
+		dots: true,
 		loop: true,
-		autoplay: false,
+		autoplay: true,
+		autoplayTimeout: 5000,
+		autoplayHoverPause: true,
 		smartSpeed: 700,
 		margin: 20,
+		slideBy: 4,
 		responsive : {
 			0 : {
 				items: 2,

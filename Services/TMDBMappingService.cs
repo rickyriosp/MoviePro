@@ -59,7 +59,8 @@ namespace MovieProMVC.Services
                     BackdropType = BuildImageType(movie.backdrop_path),
                     Poster = await EncodePosterImageAsync(movie.poster_path),
                     PosterType = BuildImageType(movie.poster_path),
-                    Rating = GetRating(movie.release_dates)
+                    Rating = GetRating(movie.release_dates),
+                    Genres = GetGenres(movie.genres)
                 };
 
                 var castMembers = movie.credits.cast.OrderByDescending(c => c.popularity)
@@ -144,6 +145,25 @@ namespace MovieProMVC.Services
                 }
             }
             return movieRating;
+        }
+        
+        private string[] GetGenres(Genre[] genres)
+        {
+            var movieGenres = new string[] {};
+
+            if (genres is not null)
+            {
+                foreach (var genre in genres)
+                {
+                    movieGenres.Append(genre.name);
+                }
+            }
+            else
+            {
+                movieGenres = new string[] { "N/A" };
+            }
+
+            return movieGenres;
         }
 
         private string BuildCastImage(string path)

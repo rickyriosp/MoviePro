@@ -25,6 +25,68 @@
     }
 </style>
 
+<!-- home -->
+<section class="home">
+    <!-- home bg -->
+    <div class="owl-carousel home__bg">
+        <div class="item home__cover" data-bg="img/home/home__bg.jpg"></div>
+        <div class="item home__cover" data-bg="img/home/home__bg2.jpg"></div>
+        <div class="item home__cover" data-bg="img/home/home__bg3.jpg"></div>
+        <div class="item home__cover" data-bg="img/home/home__bg4.jpg"></div>
+    </div>
+    <!-- end home bg -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="home__title"><b>NEW ITEMS</b> OF THIS SEASON</h1>
+
+                <button class="home__nav home__nav--prev" aria-label="prev card" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17,11H9.41l3.3-3.29a1,1,0,1,0-1.42-1.42l-5,5a1,1,0,0,0-.21.33,1,1,0,0,0,0,.76,1,1,0,0,0,.21.33l5,5a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L9.41,13H17a1,1,0,0,0,0-2Z" /></svg>
+                </button>
+                <button class="home__nav home__nav--next" aria-label="next card" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.92,11.62a1,1,0,0,0-.21-.33l-5-5a1,1,0,0,0-1.42,1.42L14.59,11H7a1,1,0,0,0,0,2h7.59l-3.3,3.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l5-5a1,1,0,0,0,.21-.33A1,1,0,0,0,17.92,11.62Z" /></svg>
+                </button>
+            </div>
+
+            <div class="col-12">
+                <div class="owl-carousel home__carousel">
+                    @{
+                        @for (var slide = 0; slide <= 3; slide++)
+                        {
+                            @foreach (var movie in Model.Upcoming.results.Skip(slide * 4).Take(4))
+                            {
+                                <!-- card -->
+                                <div class="card card--big">
+                                    <a href="details1.html" class="card__cover">
+                                        <img src="@movie.poster_path" alt="Movie Poster">
+                                        <span class="card__play">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z" /></svg>
+                                        </span>
+                                    </a>
+                                    <div class="card__content">
+                                        <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.id">@movie.title</a></h3>
+                                        <span class="card__category">
+                                            @foreach(var genre in @movie.genre_ids)
+                                            {
+                                                <a href="#">@genre</a>
+                                            }
+                                        </span>
+                                        <span class="card__rate"> @movie.vote_average</span>
+                                    </div>
+                                </div>
+                                <!-- end card -->
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end home -->
+
+@*
 <!-- UPCOMING -->
 <section class="px-4">
     <div class="row">
@@ -192,3 +254,4 @@
         </div>
     </div>
 </section>
+*@
