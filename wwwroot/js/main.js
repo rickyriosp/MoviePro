@@ -71,7 +71,7 @@ $(document).ready(function () {
 		slideBy: 4,
 		responsive : {
 			0 : {
-				items: 2,
+				items: 1,
 			},
 			576 : {
 				items: 2,
@@ -89,6 +89,19 @@ $(document).ready(function () {
 				margin: 40
 			},
 		}
+	});
+
+	$('.content__carousel').owlCarousel({
+		mouseDrag: false,
+		touchDrag: false,
+		items: 1,
+		dots: false,
+		loop: true,
+		autoplay: true,
+		autoplayTimeout: 6000,
+		autoplayHoverPause: true,
+		smartSpeed: 2000,
+		margin: 20,
 	});
 
 	$('.home__nav--next').on('click', function() {

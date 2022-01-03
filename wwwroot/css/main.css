@@ -720,6 +720,9 @@ ul {
 .home__carousel .card {
   margin-top: 25px;
 }
+.content__carousel .card {
+    margin-top: 25px;
+}
 .home__nav {
   display: flex;
   flex-direction: row;
