@@ -36,6 +36,7 @@ namespace MovieProMVC.Controllers
                 Upcoming = await _tmdbMovieService.SearchMoviesAsync(Enums.MovieCategory.upcoming, count),
                 Trending = await _tmdbMovieService.SearchMoviesTrendingAsync(count),
                 Genres = await _tmdbMovieService.GetAllMovieGenresAsync(),
+                ActorsPopular = await _tmdbMovieService.SearchActorsAsync(count),
         };
 
             return View(data);

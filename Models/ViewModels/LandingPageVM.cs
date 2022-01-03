@@ -12,5 +12,7 @@ namespace MovieProMVC.Models.ViewModels
         public MovieSearch Upcoming { get; set; }
         public MovieSearch Trending { get; set; }
         public Genres Genres { get; set; }
+
+        public ActorSearch ActorsPopular { get; set; }
     }
 }
