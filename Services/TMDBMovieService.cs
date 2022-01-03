@@ -154,10 +154,12 @@ namespace MovieProMVC.Services
             ActorSearch actorSearch = new();
 
             // Step 2: Assemble the full request uri string
-            var query = $"{_appSettings.TMDBSettings.BaseUrl}/trending/movie/day";
+            var query = $"{_appSettings.TMDBSettings.BaseUrl}/person/popular";
             var queryParams = new Dictionary<string, string>()
             {
                 { "api_key", _appSettings.MovieProSettings.TmdbApiKey },
+                { "language", _appSettings.TMDBSettings.QueryOptions.Language},
+                { "page", _appSettings.TMDBSettings.QueryOptions.Page }
             };
 
             var requestUri = QueryHelpers.AddQueryString(query, queryParams);
@@ -173,6 +175,7 @@ namespace MovieProMVC.Services
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 var dcjs = new DataContractJsonSerializer(typeof(ActorSearch));
                 actorSearch = (ActorSearch)dcjs.ReadObject(responseStream);
+                actorSearch.results.ToList().ForEach(result => result.profile_path = $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.MovieProSettings.DefaultPosterSize}/{result.profile_path}");
             }
 
             return actorSearch;

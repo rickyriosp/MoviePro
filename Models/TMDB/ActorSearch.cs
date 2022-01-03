@@ -14,6 +14,7 @@
         public string profile_path { get; set; }
         public bool adult { get; set; }
         public int id { get; set; }
+        public int gender { get; set; }
         public Known_For[] known_for { get; set; }
         public string name { get; set; }
         public float popularity { get; set; }
