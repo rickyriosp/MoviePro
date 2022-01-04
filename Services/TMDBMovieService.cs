@@ -212,16 +212,16 @@ namespace MovieProMVC.Services
             return movieGenres;
         }
 
-        public async Task<List<string>> GetMovieGenresByIdAsync(Genres allGenres, int[] genresId)
+        public async Task<MovieGenre[]> GetMovieGenresByIdAsync(int[] genresId)
         {
-            var movieGenres = new List<string>();
+            var movieGenres = new List<MovieGenre>();
 
             foreach (var genreId in genresId)
             {
-                movieGenres.Add(allGenres.genres.ToList().FirstOrDefault(g => g.id == genreId).name);
+                movieGenres.Add((MovieGenre)genreId);
             }
 
-            return movieGenres;
+            return movieGenres.ToArray();
         }
     }
 }

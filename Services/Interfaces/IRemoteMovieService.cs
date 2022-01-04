@@ -11,6 +11,6 @@ namespace MovieProMVC.Services.Interfaces
         Task<MovieSearch> SearchMoviesTrendingAsync(int count);
         Task<ActorSearch> SearchActorsAsync(int count);
         Task<Genres> GetAllMovieGenresAsync();
-        Task<List<string>> GetMovieGenresByIdAsync(Genres allGenres, int[] genresId);
+        Task<MovieGenre[]> GetMovieGenresByIdAsync(int[] genresId);
     }
 }

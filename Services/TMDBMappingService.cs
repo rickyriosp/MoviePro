@@ -60,7 +60,8 @@ namespace MovieProMVC.Services
                     Poster = await EncodePosterImageAsync(movie.poster_path),
                     PosterType = BuildImageType(movie.poster_path),
                     Rating = GetRating(movie.release_dates),
-                    Genres = GetGenres(movie.genres)
+                    Genres = GetGenres(movie.genres),
+                    Country = GetCountry(movie.production_countries)
                 };
 
                 var castMembers = movie.credits.cast.OrderByDescending(c => c.popularity)
@@ -147,24 +148,34 @@ namespace MovieProMVC.Services
             return movieRating;
         }
         
-        private string[] GetGenres(Genre[] genres)
+        private MovieGenre[] GetGenres(Genre[] genres)
         {
-            var movieGenres = new string[] {};
+            List<MovieGenre> movieGenres = new List<MovieGenre>();
 
             if (genres is not null)
             {
                 foreach (var genre in genres)
                 {
-                    movieGenres.Append(genre.name);
+                    var decodedGenre = (MovieGenre)Enum.Parse(typeof(MovieGenre), genre.name, true);
+                    movieGenres.Add(decodedGenre);
                 }
             }
-            else
+
+            return movieGenres.ToArray();
+        }
+
+        private string GetCountry(Production_Countries[] production_countries)
+        {
+            var country = "N/A";
+
+            if (production_countries is not null)
             {
-                movieGenres = new string[] { "N/A" };
+                country = production_countries.First().name;
             }
 
-            return movieGenres;
+            return country;
         }
+
 
         private string BuildCastImage(string path)
         {

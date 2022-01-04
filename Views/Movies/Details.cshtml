@@ -1,4 +1,5 @@
-﻿@using MovieProMVC.Models.Database
+﻿@using MovieProMVC.Enums
+@using MovieProMVC.Models.Database
 @using MovieProMVC.Services.Interfaces
 
 @inject IImageService _imageService;
@@ -8,7 +9,83 @@
     ViewData["Title"] = "MovieDetail";
 }
 
-<div class="row gy-3">
+<!-- details -->
+<section class="section details">
+	<!-- details background -->
+	<div class="details__bg" data-bg="" style="background:url(@_imageService.DecodeImage(Model.Backdrop, Model.BackdropType))"></div>
+	<!-- end details background -->
+
+	<!-- details content -->
+	<div class="container">
+		<div class="row">
+			<!-- title -->
+			<div class="col-12">
+				<h1 class="details__title">@Model.Title</h1>
+			</div>
+			<!-- end title -->
+
+			<!-- content -->
+			<div class="col-12 col-xl-6">
+				<div class="card card--details">
+					<!-- card cover -->
+					<div class="card__cover">
+						<img src="@_imageService.DecodeImage(Model.Poster, Model.PosterType)" alt="Movie Poster">
+					</div>
+					<!-- end card cover -->
+
+					<!-- card content -->
+					<div class="card__content">
+						<div class="card__wrap">
+							<span class="card__rate"> @Model.VoteAverage</span>
+
+							<ul class="card__list">
+								<li>@Model.Rating</li>
+								@*<li>HD</li>*@
+							</ul>
+						</div>
+
+						<ul class="card__meta">
+							<li><span>Genre:</span>
+                            @{
+                                @foreach (var genre in Model.Genres)
+                                {
+                                    <a href="#">@genre.GetDescription()</a>
+                                }
+                            }
+							<li><span>Release year:</span> @Model.ReleaseDate.ToString("yyyy")</li>
+							<li><span>Running time:</span> @Model.RunTime min</li>
+							<li><span>Country:</span> <a href="#">@Model.Country</a> </li>
+						</ul>
+
+						<div class="card__description card__description--details">
+							@Model.Overview
+                        </div>
+					</div>
+					<!-- end card content -->
+				</div>
+			</div>
+			<!-- end content -->
+
+			<!-- player -->
+			<div class="col-12 col-xl-6">
+                <div class="plyr__video-embed" id="player">
+                  <iframe
+                    src="@Model.TrailerUrl?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1"
+                    allowfullscreen
+                    allowtransparency
+                    allow="autoplay"
+                  ></iframe>
+                </div>
+			</div>
+			<!-- end player -->
+		</div>
+	</div>
+	<!-- end details content -->
+</section>
+<!-- end details -->
+
+
+@*<div class="row gy-3">
     <div class="col-sm-12 col-md-6">
         <div class="row">
             <img src="@_imageService.DecodeImage(Model.Poster, Model.PosterType)" class="w-100" alt="Movie Poster" />
@@ -93,10 +170,10 @@
             </div>
         </div>
     </div>
-}
+}*@
 
 <!-- Modal -->
-<div class="modal fade" id="trailer" tabindex="-1" aria-labelledby="trailerLabel" aria-hidden="true">
+@*<div class="modal fade" id="trailer" tabindex="-1" aria-labelledby="trailerLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -139,4 +216,4 @@
       player.pauseVideo();
     })
 </script>
-}
+}*@

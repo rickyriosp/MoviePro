@@ -255,9 +255,13 @@ namespace MovieProMVC.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string[]>("Genres")
+                    b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("text[]");
+                        .HasColumnType("text");
+
+                    b.Property<int[]>("Genres")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("integer");

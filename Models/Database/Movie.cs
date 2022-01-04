@@ -20,7 +20,8 @@ namespace MovieProMVC.Models.Database
 
         public MovieRating Rating { get; set; }
         public float VoteAverage { get; set; }
-        public string[] Genres { get; set; }
+        public MovieGenre[] Genres { get; set; }
+        public string Country { get; set; }
 
         [Display(Name = "Poster")]
         public byte[] Poster { get; set; }
