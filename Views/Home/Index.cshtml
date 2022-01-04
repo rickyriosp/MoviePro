@@ -446,7 +446,8 @@
                                                     <span class="card__category">
                                                         @foreach (var movie in actor.known_for.Take(3))
                                                         {
-                                                            <a href="#">@movie.title</a>
+                                                            var title = movie.media_type == "movie" ? movie.title : movie.original_name;
+                                                            <a href="#">@title</a>
                                                         }
                                                     </span>
 

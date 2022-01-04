@@ -52,5 +52,13 @@ namespace MovieProMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Route("/Home/HandleError/{code}")]
+        public IActionResult HandleError(int code)
+        {
+            ViewData["ErrorMessage"] = $"Error occurred. The ErrorCode is: {code}";
+            
+            return View("404");
+        }
     }
 }
