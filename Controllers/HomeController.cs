@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieProMVC.Data;
 using MovieProMVC.Models;
@@ -56,7 +57,11 @@ namespace MovieProMVC.Controllers
         [Route("/Home/HandleError/404")]
         public IActionResult HandleError(int code)
         {
+            var statusCodeResult = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+
             ViewData["ErrorMessage"] = $"Error occurred. The ErrorCode is: {code}";
+            ViewData["Path"] = statusCodeResult.OriginalPath;
+            ViewData["Query"] = statusCodeResult.OriginalQueryString;
             
             return View("404");
         }
