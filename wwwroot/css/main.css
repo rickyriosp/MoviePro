@@ -599,14 +599,15 @@ ul {
   .header__sign-in svg {
     display: none;
   }
-  .header__sign-in span {
+.header__sign-in span,
+.header__sign-in span button {
     display: block;
     font-size: 14px;
     color: #fff;
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 0.6px;
-  }
+}
   .header__nav {
     top: 80px;
     width: 260px;
