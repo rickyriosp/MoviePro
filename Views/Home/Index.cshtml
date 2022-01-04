@@ -72,7 +72,7 @@
                                         <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.id">@movie.title</a></h3>
                                         <span class="card__category">
                                             @{
-                                                var movieGenres = await _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
+                                                var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                 @foreach (var genre in movieGenres)
                                                 {
                                                     <a href="#">@genre</a>
@@ -174,7 +174,7 @@
                                                     <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.id">@movie.title</a></h3>
                                                     <span class="card__category">
                                                         @{
-                                                            var movieGenres = await _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
+                                                            var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
                                                                 <a href="#">@genre</a>
@@ -231,7 +231,7 @@
                                                     <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.id">@movie.title</a></h3>
                                                     <span class="card__category">
                                                         @{
-                                                            var movieGenres = await _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
+                                                            var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
                                                                 <a href="#">@genre</a>
@@ -288,7 +288,7 @@
                                                     <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.id">@movie.title</a></h3>
                                                     <span class="card__category">
                                                         @{
-                                                            var movieGenres = await _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
+                                                            var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
                                                                 <a href="#">@genre</a>
@@ -345,7 +345,7 @@
                                                     <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.id">@movie.title</a></h3>
                                                     <span class="card__category">
                                                         @{
-                                                            var movieGenres = await _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
+                                                            var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
                                                                 <a href="#">@genre</a>

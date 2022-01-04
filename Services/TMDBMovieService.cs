@@ -212,7 +212,7 @@ namespace MovieProMVC.Services
             return movieGenres;
         }
 
-        public async Task<MovieGenre[]> GetMovieGenresByIdAsync(int[] genresId)
+        public MovieGenre[] GetMovieGenresByIdAsync(int[] genresId)
         {
             var movieGenres = new List<MovieGenre>();
 

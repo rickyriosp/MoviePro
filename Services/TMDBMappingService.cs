@@ -156,7 +156,7 @@ namespace MovieProMVC.Services
             {
                 foreach (var genre in genres)
                 {
-                    var decodedGenre = (MovieGenre)Enum.Parse(typeof(MovieGenre), genre.name, true);
+                    var decodedGenre = (MovieGenre)genre.id;
                     movieGenres.Add(decodedGenre);
                 }
             }
@@ -175,7 +175,6 @@ namespace MovieProMVC.Services
 
             return country;
         }
-
 
         private string BuildCastImage(string path)
         {
