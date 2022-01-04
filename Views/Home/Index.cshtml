@@ -157,7 +157,7 @@
                         @{
                             for (var slide = 0; slide <= 3; slide++)
                             {
-                                <div class="row">
+                                <div class="row" style="padding-left: 15px;">
                                     @foreach (var movie in Model.Popular.results.Skip(slide * 4).Take(4))
                                     {
                                         <!-- card -->

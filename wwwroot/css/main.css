@@ -162,8 +162,8 @@ ul {
 }
 .row--grid .col-6,
 .row--grid .col-12 {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 @media (min-width: 768px) {
   .row--grid {
@@ -1420,7 +1420,7 @@ ul {
   margin-bottom: 20px;
 }
 .card--details .card__cover {
-  max-width: 250px;
+  /*max-width: 250px;*/
 }
 .card--details .card__cover:before {
   display: none;
