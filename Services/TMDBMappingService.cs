@@ -11,10 +11,12 @@ namespace MovieProMVC.Services
     {
         private readonly AppSettings _appSettings;
         private readonly IImageService _imageService;
-        public TMDBMappingService(IOptions<AppSettings> appSettings, IImageService imageService)
+        private readonly IRemoteMovieService _tmdbMovieService;
+        public TMDBMappingService(IOptions<AppSettings> appSettings, IImageService imageService, IRemoteMovieService tmdbMovieService)
         {
             _appSettings = appSettings.Value;
             _imageService = imageService;
+            _tmdbMovieService = tmdbMovieService;
         }
 
         public ActorDetail MapActorDetail(ActorDetail actor)
@@ -97,6 +99,24 @@ namespace MovieProMVC.Services
                         Name = member.name,
                         Job = member.job,
                         ImageUrl = BuildCastImage(member.profile_path),
+                    });
+                });
+
+                var similarMovies = movie.similar.results.OrderByDescending(m => m.popularity)
+                    .GroupBy(m => m.id)
+                    .Select(g => g.First())
+                    .Take(10)
+                    .ToList();
+
+                similarMovies.ForEach(similar =>
+                {
+                    newMovie.MovieSimilar.Add(new MovieSimilar()
+                    {
+                        MovieId = similar.id,
+                        Title = similar.title,
+                        VoteAverage = similar.vote_average,
+                        Genres = _tmdbMovieService.GetMovieGenresByIdAsync(similar.genre_ids),
+                        PosterPath = similar.poster_path,
                     });
                 });
             }

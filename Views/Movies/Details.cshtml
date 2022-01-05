@@ -46,12 +46,10 @@
 
 						<ul class="card__meta">
 							<li><span>Genre:</span>
-                            @{
-                                @foreach (var genre in Model.Genres)
-                                {
-                                    <a href="#">@genre.GetDescription()</a>
-                                }
-                            }
+							@foreach (var genre in Model.Genres)
+							{
+								<a href="#">@genre.GetDescription()</a>
+							}
 							<li><span>Release year:</span> @Model.ReleaseDate.ToString("yyyy")</li>
 							<li><span>Running time:</span> @Model.RunTime min</li>
 							<li><span>Country:</span> <a href="#">@Model.Country</a> </li>
@@ -151,6 +149,9 @@
 												<div class="card">
 													<a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.CastId" class="card__cover">
 														<img src="@actor.ImageUrl" alt="Actor Photo">
+														<span class="card__play">
+															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
+														</span>
 													</a>
 													<div class="card__content">
 														<h3 class="card__title"><a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.CastId">@actor.Name</a></h3>
@@ -186,39 +187,7 @@
 											</div>
 											<p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
 										</li>
-
-										<li class="reviews__item">
-											<div class="reviews__autor">
-												<img class="reviews__avatar" src="img/user.svg" alt="">
-												<span class="reviews__name">Best Marvel movie in my opinion</span>
-												<span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-												<span class="reviews__rating"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M22,10.1c0.1-0.5-0.3-1.1-0.8-1.1l-5.7-0.8L12.9,3c-0.1-0.2-0.2-0.3-0.4-0.4C12,2.3,11.4,2.5,11.1,3L8.6,8.2L2.9,9C2.6,9,2.4,9.1,2.3,9.3c-0.4,0.4-0.4,1,0,1.4l4.1,4l-1,5.7c0,0.2,0,0.4,0.1,0.6c0.3,0.5,0.9,0.7,1.4,0.4l5.1-2.7l5.1,2.7c0.1,0.1,0.3,0.1,0.5,0.1v0c0.1,0,0.1,0,0.2,0c0.5-0.1,0.9-0.6,0.8-1.2l-1-5.7l4.1-4C21.9,10.5,22,10.3,22,10.1z"></path></svg>9.0</span>
-											</div>
-											<p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-										</li>
-
-										<li class="reviews__item">
-											<div class="reviews__autor">
-												<img class="reviews__avatar" src="img/user.svg" alt="">
-												<span class="reviews__name">Best Marvel movie in my opinion</span>
-												<span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-												<span class="reviews__rating"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M22,10.1c0.1-0.5-0.3-1.1-0.8-1.1l-5.7-0.8L12.9,3c-0.1-0.2-0.2-0.3-0.4-0.4C12,2.3,11.4,2.5,11.1,3L8.6,8.2L2.9,9C2.6,9,2.4,9.1,2.3,9.3c-0.4,0.4-0.4,1,0,1.4l4.1,4l-1,5.7c0,0.2,0,0.4,0.1,0.6c0.3,0.5,0.9,0.7,1.4,0.4l5.1-2.7l5.1,2.7c0.1,0.1,0.3,0.1,0.5,0.1v0c0.1,0,0.1,0,0.2,0c0.5-0.1,0.9-0.6,0.8-1.2l-1-5.7l4.1-4C21.9,10.5,22,10.3,22,10.1z"></path></svg>7.5</span>
-											</div>
-											<p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-										</li>
 									</ul>
-
-									<form action="#" class="form">
-										<input type="text" class="form__input" placeholder="Title">
-										<textarea class="form__textarea" placeholder="Review"></textarea>
-										<div class="form__slider">
-											<div class="form__slider-rating" id="slider__rating"></div>
-											<div class="form__slider-value" id="form__slider-value"></div>
-										</div>
-										<button type="button" class="form__btn">Send</button>
-									</form>
 								</div>
 							</div>
 							<!-- end reviews -->
@@ -299,130 +268,31 @@
 					</div>
 					<!-- end section title -->
 
-					<!-- card -->
-					<div class="col-6 col-sm-4 col-lg-6">
-						<div class="card">
-							<a href="details1.html" class="card__cover">
-								<img src="img/covers/cover.jpg" alt="">
-								<span class="card__play">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
-								</span>
-							</a>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
-								<span class="card__category">
-									<a href="#">Action</a>
-									<a href="#">Triler</a>
-								</span>
-								<span class="card__rate">8.4</span>
+					@foreach (var similar in @Model.MovieSimilar.Take(6))
+					{
+						<!-- card -->
+						<div class="col-6 col-sm-4 col-lg-6">
+							<div class="card">
+								<a asp-controller="Movies" asp-action="Details" asp-route-id="@similar.MovieId" class="card__cover">
+									<img src="@similar.PosterPath" alt="Movie Poster">
+									<span class="card__play">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
+									</span>
+								</a>
+								<div class="card__content">
+									<h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@similar.MovieId">@similar.Title</a></h3>
+									<span class="card__category">
+										@foreach (var genre in similar.Genres)
+										{
+											<a href="#">@genre.GetDescription()</a>
+										}
+									</span>
+									<span class="card__rate">@similar.VoteAverage.ToString("0.0")</span>
+								</div>
 							</div>
 						</div>
-					</div>
-					<!-- end card -->
-
-					<!-- card -->
-					<div class="col-6 col-sm-4 col-lg-6">
-						<div class="card">
-							<a href="details1.html" class="card__cover">
-								<img src="img/covers/cover3.jpg" alt="">
-								<span class="card__play">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
-								</span>
-							</a>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">Benched</a></h3>
-								<span class="card__category">
-									<a href="#">Comedy</a>
-								</span>
-								<span class="card__rate">7.1</span>
-							</div>
-						</div>
-					</div>
-					<!-- end card -->
-
-					<!-- card -->
-					<div class="col-6 col-sm-4 col-lg-6">
-						<div class="card">
-							<a href="details1.html" class="card__cover">
-								<img src="img/covers/cover2.jpg" alt="">
-								<span class="card__play">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
-								</span>
-							</a>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">Whitney</a></h3>
-								<span class="card__category">
-									<a href="#">Romance</a>
-									<a href="#">Drama</a>
-									<a href="#">Music</a>
-								</span>
-								<span class="card__rate">6.3</span>
-							</div>
-						</div>
-					</div>
-					<!-- end card -->
-
-					<!-- card -->
-					<div class="col-6 col-sm-4 col-lg-6">
-						<div class="card">
-							<a href="details1.html" class="card__cover">
-								<img src="img/covers/cover6.jpg" alt="">
-								<span class="card__play">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
-								</span>
-							</a>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">Blindspotting</a></h3>
-								<span class="card__category">
-									<a href="#">Comedy</a>
-									<a href="#">Drama</a>
-								</span>
-								<span class="card__rate">7.9</span>
-							</div>
-						</div>
-					</div>
-					<!-- end card -->
-
-					<!-- card -->
-					<div class="col-6 col-sm-4 col-lg-6">
-						<div class="card">
-							<a href="details1.html" class="card__cover">
-								<img src="img/covers/cover4.jpg" alt="">
-								<span class="card__play">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
-								</span>
-							</a>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
-								<span class="card__category">
-									<a href="#">Action</a>
-									<a href="#">Triler</a>
-								</span>
-								<span class="card__rate">8.4</span>
-							</div>
-						</div>
-					</div>
-					<!-- end card -->
-
-					<!-- card -->
-					<div class="col-6 col-sm-4 col-lg-6">
-						<div class="card">
-							<a href="details1.html" class="card__cover">
-								<img src="img/covers/cover5.jpg" alt="">
-								<span class="card__play">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
-								</span>
-							</a>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">Benched</a></h3>
-								<span class="card__category">
-									<a href="#">Comedy</a>
-								</span>
-								<span class="card__rate">7.1</span>
-							</div>
-						</div>
-					</div>
-					<!-- end card -->
+						<!-- end card -->
+					}
 				</div>
 			</div>
 			<!-- end sidebar -->

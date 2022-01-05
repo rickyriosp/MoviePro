@@ -1,6 +1,5 @@
 ﻿namespace MovieProMVC.Models.TMDB
 {
-
     public class MovieDetail
     {
         public bool adult { get; set; }
@@ -32,6 +31,8 @@
         public Images images { get; set; }
         public Videos videos { get; set; }
         public Release_Dates release_dates { get; set; }
+        public MovieSearch similar { get; set; }
+
     }
 
     public class Belongs_To_Collection
