@@ -188,7 +188,7 @@ namespace MovieProMVC.Services
         {
             var country = "N/A";
 
-            if (production_countries is not null)
+            if (production_countries != null && production_countries.Length > 0)
             {
                 country = production_countries.First().name;
             }
