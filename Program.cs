@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using MovieProMVC.Data;
 using MovieProMVC.Models.Settings;
@@ -37,6 +38,9 @@ builder.Services.AddScoped<IDataMappingService, TMDBMappingService>();
 
 // Register our BasicImageService
 builder.Services.AddSingleton<IImageService, BasicImageService>();
+
+// Register our EmailSenderService
+builder.Services.AddScoped<IEmailSender, EmailSenderService>();
 
 var app = builder.Build();
 
