@@ -1,4 +1,5 @@
-﻿@using MovieProMVC.Models.ViewModels
+﻿@using MovieProMVC.Enums
+@using MovieProMVC.Models.ViewModels
 @using MovieProMVC.Services.Interfaces
 
 @inject IRemoteMovieService _tmdbMovieService;
@@ -75,7 +76,7 @@
                                                 var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                 @foreach (var genre in movieGenres)
                                                 {
-                                                    <a href="#">@genre</a>
+                                                    <a href="#">@genre.GetDescription()</a>
                                                 }
                                             }
                                         </span>
@@ -177,7 +178,7 @@
                                                             var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
-                                                                <a href="#">@genre</a>
+                                                                <a href="#">@genre.GetDescription()</a>
                                                             }
                                                         }
                                                     </span>
@@ -234,7 +235,7 @@
                                                             var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
-                                                                <a href="#">@genre</a>
+                                                                <a href="#">@genre.GetDescription()</a>
                                                             }
                                                         }
                                                     </span>
@@ -291,7 +292,7 @@
                                                             var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
-                                                                <a href="#">@genre</a>
+                                                                <a href="#">@genre.GetDescription()</a>
                                                             }
                                                         }
                                                     </span>
@@ -348,7 +349,7 @@
                                                             var movieGenres = _tmdbMovieService.GetMovieGenresByIdAsync(@movie.genre_ids);
                                                             @foreach (var genre in movieGenres)
                                                             {
-                                                                <a href="#">@genre</a>
+                                                                <a href="#">@genre.GetDescription()</a>
                                                             }
                                                         }
                                                     </span>

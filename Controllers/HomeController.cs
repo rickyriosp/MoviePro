@@ -54,7 +54,7 @@ namespace MovieProMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [Route("/Home/HandleError/404")]
+        [Route("/Home/HandleError/{code}")]
         public IActionResult HandleError(int code)
         {
             var statusCodeResult = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
@@ -63,7 +63,12 @@ namespace MovieProMVC.Controllers
             ViewData["Path"] = statusCodeResult.OriginalPath;
             ViewData["Query"] = statusCodeResult.OriginalQueryString;
             
-            return View("404");
+            if (code == 404)
+            {
+                return View("404");
+            }
+
+            return StatusCode(code);
         }
     }
 }
