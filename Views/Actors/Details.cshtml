@@ -6,31 +6,59 @@
     ViewData["Title"] = "ActorDetail";
 }
 
+<!-- details -->
+<section class="section details">
+	<!-- details background -->
+	<div class="details__bg" data-bg="../../img/home/home__bg.jpg"></div>
+	<!-- end details background -->
 
-<div class="row">
-    <div class="col-sm-12 col-md-4">
-        <img class="img-fluid" src="@Model.profile_path" alt="Actor Image">
-    </div>
-    <div class="col-sm-12 col-md-8">
-        <div class="row">
-            <table class="table table-hover table-responsive">
-                <tr>
-                    <td>Name:</td>
-                    <td>@Model.name</td>
-                </tr>
-                <tr>
-                    <td>Biography:</td>
-                    <td>@Model.biography</td>
-                </tr>
-                <tr>
-                    <td>Birthday:</td>
-                    <td>@Model.birthday</td>
-                </tr>
-                <tr>
-                    <td>Place of birth:</td>
-                    <td>@Model.place_of_birth</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
+	<!-- details content -->
+	<div class="container">
+		<div class="row">
+			<!-- title -->
+			<div class="col-12">
+				<h1 class="details__title">@Model.name</h1>
+			</div>
+			<!-- end title -->
+
+			<!-- content -->
+			<div class="col-12">
+				<div class="card card--details">
+					<!-- card cover -->
+					<div class="card__cover">
+						<img src="@Model.profile_path" alt="Actor Photo">
+					</div>
+					<!-- end card cover -->
+
+					<!-- card content -->
+					<div class="card__content">
+						@*<div class="card__wrap">
+							<span class="card__rate"> 8.4</span>
+
+							<ul class="card__list">
+								<li>HD</li>
+								<li>16+</li>
+							</ul>
+						</div>*@
+
+						<ul class="card__meta">
+							@*<li><span>Genre:</span> <a href="#">Action</a>
+							<a href="#">Triler</a></li>*@
+							<li><span>Birthday:</span> @Model.birthday</li>
+							<li><span>Place of birth:</span> @Model.place_of_birth</li>
+							<li><span>Biography:</span></li>
+						</ul>
+
+						<div class="card__description card__description--details">
+							@Model.biography
+						</div>
+					</div>
+					<!-- end card content -->
+				</div>
+			</div>
+			<!-- end content -->
+		</div>
+	</div>
+	<!-- end details content -->
+</section>
+<!-- end details -->
