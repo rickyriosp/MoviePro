@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using MovieProMVC.Data;
 using MovieProMVC.Models.Settings;
+using MovieProMVC.Models.ViewModels;
 using MovieProMVC.Services;
 using MovieProMVC.Services.Interfaces;
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -39,8 +41,12 @@ builder.Services.AddScoped<IDataMappingService, TMDBMappingService>();
 // Register our BasicImageService
 builder.Services.AddSingleton<IImageService, BasicImageService>();
 
-// Register our EmailSenderService
-builder.Services.AddScoped<IEmailSender, EmailSenderService>();
+// Register and inject an IOptions of type MailSettings model to easily access the configuration
+// settings as a strongly typed object
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
+// Register our EmailService
+builder.Services.AddScoped<IMovieEmailSender, EmailService>();
 
 var app = builder.Build();
 

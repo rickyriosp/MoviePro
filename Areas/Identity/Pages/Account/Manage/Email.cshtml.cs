@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using MovieProMVC.Services.Interfaces;
 
 namespace MovieProMVC.Areas.Identity.Pages.Account.Manage
 {
@@ -19,12 +20,12 @@ namespace MovieProMVC.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IMovieEmailSender _emailSender;
 
         public EmailModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IEmailSender emailSender)
+            IMovieEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
