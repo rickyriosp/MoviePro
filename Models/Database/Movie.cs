@@ -45,5 +45,6 @@ namespace MovieProMVC.Models.Database
         public ICollection<MovieCast> Cast { get; set; } = new HashSet<MovieCast>();
         public ICollection<MovieCrew> Crew { get; set; } = new HashSet<MovieCrew>();
         public ICollection<MovieSimilar> MovieSimilar { get; set; } = new HashSet<MovieSimilar>();
+        public ICollection<MovieReview> Reviews { get; set; } = new HashSet<MovieReview>();
     }
 }

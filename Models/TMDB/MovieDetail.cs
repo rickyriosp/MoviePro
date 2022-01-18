@@ -32,7 +32,7 @@
         public Videos videos { get; set; }
         public Release_Dates release_dates { get; set; }
         public MovieSearch similar { get; set; }
-
+        public Reviews reviews { get; set; }
     }
 
     public class Belongs_To_Collection
@@ -151,6 +151,33 @@
         public string english_name { get; set; }
         public string iso_639_1 { get; set; }
         public string name { get; set; }
+    }
+
+    public class Reviews
+    {
+        public int page { get; set; }
+        public Review_Result[] results { get; set; }
+        public int total_pages { get; set; }
+        public int total_results { get; set; }
+    }
+
+    public class Review_Result
+    {
+        public string author { get; set; }
+        public Review_Author_Details author_details { get; set; }
+        public string content { get; set; }
+        public DateTime created_at { get; set; }
+        public string id { get; set; }
+        public DateTime updated_at { get; set; }
+        public string url { get; set; }
+    }
+
+    public class Review_Author_Details
+    {
+        public string name { get; set; }
+        public string username { get; set; }
+        public object avatar_path { get; set; }
+        public object rating { get; set; }
     }
 
 }
