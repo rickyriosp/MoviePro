@@ -7,6 +7,7 @@
         public string DefaultPosterSize { get; set; }
         public string DefaultYouTubeKey { get; set; }
         public string DefaultCastImage { get; set; }
+        public string DefaultAvatarImage { get; set; }
         public DefaultCollection DefaultCollection { get; set; }
         public DefaultCredentials DefaultCredentials { get; set; }
     }

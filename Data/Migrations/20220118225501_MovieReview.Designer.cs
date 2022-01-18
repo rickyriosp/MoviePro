@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieProMVC.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220118213910_Added_MovieReview")]
-    partial class Added_MovieReview
+    [Migration("20220118225501_MovieReview")]
+    partial class MovieReview
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -411,14 +411,17 @@ namespace MovieProMVC.Data.Migrations
 
             modelBuilder.Entity("MovieProMVC.Models.Database.MovieReview", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Avatar_path")
+                    b.Property<string>("AvatarPath")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -434,6 +437,10 @@ namespace MovieProMVC.Data.Migrations
 
                     b.Property<int>("Rating")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ReviewId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Updated_at")
                         .HasColumnType("timestamp with time zone");

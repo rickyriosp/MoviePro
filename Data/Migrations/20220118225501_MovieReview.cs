@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace MovieProMVC.Data.Migrations
 {
-    public partial class Added_MovieReview : Migration
+    public partial class MovieReview : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,14 +14,16 @@ namespace MovieProMVC.Data.Migrations
                 name: "MovieReview",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    MovieId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ReviewId = table.Column<string>(type: "text", nullable: false),
                     Author = table.Column<string>(type: "text", nullable: false),
-                    Avatar_path = table.Column<string>(type: "text", nullable: false),
+                    AvatarPath = table.Column<string>(type: "text", nullable: false),
                     Rating = table.Column<int>(type: "integer", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
                     Created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    MovieId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

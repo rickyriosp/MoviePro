@@ -119,6 +119,29 @@ namespace MovieProMVC.Services
                         PosterPath = similar.poster_path,
                     });
                 });
+
+                var reviews = movie.reviews.results.OrderByDescending(r => r.author_details.rating)
+                    .GroupBy(r => r.id)
+                    .Select(g => g.First())
+                    .Take(3)
+                    .ToList();
+
+                if (reviews is not null)
+                {
+                    reviews.ForEach(review =>
+                    {
+                        newMovie.Reviews.Add(new MovieReview()
+                        {
+                            ReviewId = review.id,
+                            Author = review.author,
+                            AvatarPath = BuildAvatarImage(review.author_details.avatar_path),
+                            Rating = review.author_details.rating,
+                            Content = review.content,
+                            Created_at = DateTime.Parse(review.created_at),
+                            Updated_at = DateTime.Parse(review.updated_at),
+                        });
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -201,6 +224,13 @@ namespace MovieProMVC.Services
             if (string.IsNullOrEmpty(path)) return _appSettings.MovieProSettings.DefaultCastImage;
 
             return $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.MovieProSettings.DefaultPosterSize}/{path}";
+        }
+
+        private string BuildAvatarImage(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return _appSettings.MovieProSettings.DefaultAvatarImage;
+
+            return path.Substring(1);
         }
 
     }

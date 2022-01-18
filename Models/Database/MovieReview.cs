@@ -1,11 +1,14 @@
-﻿namespace MovieProMVC.Models.Database
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MovieProMVC.Models.Database
 {
     public class MovieReview
     {
-        public string Id { get; set; }
-        public int MovieId { get; set; }
+        public int Id { get; set; }
+        public string ReviewId { get; set; }
         public string Author { get; set; }
-        public string Avatar_path { get; set; }
+        [Display(Name = "Avatar")]
+        public string AvatarPath { get; set; }
         public int Rating { get; set; }
         public string Content { get; set; }
         public DateTime Created_at { get; set; }

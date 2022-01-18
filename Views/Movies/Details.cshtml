@@ -99,11 +99,11 @@
 						</li>
 
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Reviews</a>
+							<a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Crew</a>
 						</li>
 
 						<li class="nav-item" role="presentation">
-							<a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Photos</a>
+							<a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Reviews</a>
 						</li>
 					</ul>
 					<!-- end content tabs nav -->
@@ -119,9 +119,9 @@
 							<ul class="nav nav-tabs" role="tablist">
 								<li class="nav-item"><a class="nav-link active" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">Cast</a></li>
 
-								<li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Reviews</a></li>
+								<li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">Crew</a></li>
 
-								<li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Photos</a></li>
+								<li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">Reviews</a></li>
 							</ul>
 						</div>
 					</div>
@@ -171,89 +171,75 @@
 						</div>
 					</div>
 
-					<div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
+					<div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="3-tab">
+						<div class="row">
+							<!-- cast -->
+							<div class="col-12">
+								<div class="comments">
+									<ul class="row comments__list">
+										@foreach (var crew in @Model.Crew.Take(8))
+										{
+											<!-- card -->
+											<li class="comments__item col-6 col-sm-4 col-lg-3">
+												<div class="card">
+													<a asp-controller="Actors" asp-action="Details" asp-route-id="@crew.CrewId" class="card__cover">
+														<img src="@crew.ImageUrl" alt="Actor Photo">
+														<span class="card__play">
+															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z"/></svg>
+														</span>
+													</a>
+													<div class="card__content">
+														<h3 class="card__title"><a asp-controller="Actors" asp-action="Details" asp-route-id="@crew.CrewId">@crew.Name</a></h3>
+														@*<span class="card__category">
+															<a href="#">@actor.Department</a>
+														</span>*@
+														<span class="card__rate">@crew.Job</span>
+													</div>
+												</div>
+											</li>
+											<!-- end card -->
+										}
+									</ul>>
+								</div>
+							</div>
+							<!-- end cast -->
+						</div>
+					</div>
+
+					<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="2-tab">
 						<div class="row">
 							<!-- reviews -->
 							<div class="col-12">
 								<div class="reviews">
 									<ul class="reviews__list">
-										<li class="reviews__item">
-											<div class="reviews__autor">
-												<img class="reviews__avatar" src="img/user.svg" alt="">
-												<span class="reviews__name">Best Marvel movie in my opinion</span>
-												<span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
+										@foreach (var review in Model.Reviews)
+										{
+											<!-- card -->
+											<li class="reviews__item">
+												<div class="reviews__autor">
+													<img class="reviews__avatar" src="@review.AvatarPath" alt="Avatar Picture">
+													<span class="reviews__name">@review.Author</span>
+													<span class="reviews__time">@review.Updated_at</span>
 
-												<span class="reviews__rating"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M22,10.1c0.1-0.5-0.3-1.1-0.8-1.1l-5.7-0.8L12.9,3c-0.1-0.2-0.2-0.3-0.4-0.4C12,2.3,11.4,2.5,11.1,3L8.6,8.2L2.9,9C2.6,9,2.4,9.1,2.3,9.3c-0.4,0.4-0.4,1,0,1.4l4.1,4l-1,5.7c0,0.2,0,0.4,0.1,0.6c0.3,0.5,0.9,0.7,1.4,0.4l5.1-2.7l5.1,2.7c0.1,0.1,0.3,0.1,0.5,0.1v0c0.1,0,0.1,0,0.2,0c0.5-0.1,0.9-0.6,0.8-1.2l-1-5.7l4.1-4C21.9,10.5,22,10.3,22,10.1z"></path></svg>8.4</span>
-											</div>
-											<p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-										</li>
+													<span class="reviews__rating"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M22,10.1c0.1-0.5-0.3-1.1-0.8-1.1l-5.7-0.8L12.9,3c-0.1-0.2-0.2-0.3-0.4-0.4C12,2.3,11.4,2.5,11.1,3L8.6,8.2L2.9,9C2.6,9,2.4,9.1,2.3,9.3c-0.4,0.4-0.4,1,0,1.4l4.1,4l-1,5.7c0,0.2,0,0.4,0.1,0.6c0.3,0.5,0.9,0.7,1.4,0.4l5.1-2.7l5.1,2.7c0.1,0.1,0.3,0.1,0.5,0.1v0c0.1,0,0.1,0,0.2,0c0.5-0.1,0.9-0.6,0.8-1.2l-1-5.7l4.1-4C21.9,10.5,22,10.3,22,10.1z"></path></svg>8.4</span>
+												</div>
+												<p class="reviews__text">@review.Content</p>
+											</li>
+											<!-- end card -->
+										}
+										@if (!Model.Reviews.Any())
+										{
+											<!-- card -->
+											<li class="reviews__item">
+												<p class="reviews__text">No reviews found.</p>
+											</li>
+											<!-- end card -->
+										}
 									</ul>
 								</div>
 							</div>
 							<!-- end reviews -->
 						</div>
-					</div>
-
-					<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab">
-						<!-- project gallery -->
-						<div class="gallery" itemscope>
-							<div class="row row--grid">
-								<!-- gallery item -->
-								<figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
-									<a href="img/gallery/project-1.jpg" itemprop="contentUrl" data-size="1920x1280">
-										<img src="img/gallery/project-1.jpg" itemprop="thumbnail" alt="Image description" />
-									</a>
-									<figcaption itemprop="caption description">Some image caption 1</figcaption>
-								</figure>
-								<!-- end gallery item -->
-
-								<!-- gallery item -->
-								<figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
-									<a href="img/gallery/project-2.jpg" itemprop="contentUrl" data-size="1920x1280">
-										<img src="img/gallery/project-2.jpg" itemprop="thumbnail" alt="Image description" />
-									</a>
-									<figcaption itemprop="caption description">Some image caption 2</figcaption>
-								</figure>
-								<!-- end gallery item -->
-
-								<!-- gallery item -->
-								<figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
-									<a href="img/gallery/project-3.jpg" itemprop="contentUrl" data-size="1920x1280">
-										<img src="img/gallery/project-3.jpg" itemprop="thumbnail" alt="Image description" />
-									</a>
-									<figcaption itemprop="caption description">Some image caption 3</figcaption>
-								</figure>
-								<!-- end gallery item -->
-
-								<!-- gallery item -->
-								<figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
-									<a href="img/gallery/project-4.jpg" itemprop="contentUrl" data-size="1920x1280">
-										<img src="img/gallery/project-4.jpg" itemprop="thumbnail" alt="Image description" />
-									</a>
-									<figcaption itemprop="caption description">Some image caption 4</figcaption>
-								</figure>
-								<!-- end gallery item -->
-
-								<!-- gallery item -->
-								<figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
-									<a href="img/gallery/project-5.jpg" itemprop="contentUrl" data-size="1920x1280">
-										<img src="img/gallery/project-5.jpg" itemprop="thumbnail" alt="Image description" />
-									</a>
-									<figcaption itemprop="caption description">Some image caption 5</figcaption>
-								</figure>
-								<!-- end gallery item -->
-
-								<!-- gallery item -->
-								<figure class="col-12 col-sm-6 col-xl-4" itemprop="associatedMedia" itemscope>
-									<a href="img/gallery/project-6.jpg" itemprop="contentUrl" data-size="1920x1280">
-										<img src="img/gallery/project-6.jpg" itemprop="thumbnail" alt="Image description" />
-									</a>
-									<figcaption itemprop="caption description">Some image caption 6</figcaption>
-								</figure>
-								<!-- end gallery item -->
-							</div>
-						</div>
-						<!-- end project gallery -->
 					</div>
 				</div>
 				<!-- end content tabs -->
