@@ -14,12 +14,14 @@ namespace MovieProMVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IRemoteMovieService _tmdbMovieService;
+        private readonly IMovieEmailSender _emailSender;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IRemoteMovieService tmdbMovieService)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IRemoteMovieService tmdbMovieService, IMovieEmailSender emailSender)
         {
             _logger = logger;
             _context = context;
             _tmdbMovieService = tmdbMovieService;
+            _emailSender = emailSender;
         }
 
         public async Task<IActionResult> Index()
@@ -41,6 +43,26 @@ namespace MovieProMVC.Controllers
         };
 
             return View(data);
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Contact(ContactMe model)
+        {
+            if (ModelState.IsValid)
+            {
+                // This is where we send the email
+                await _emailSender.SendContactEmailAsync(model.Name, model.Email, model.Subject, model.Message);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
         }
 
         public IActionResult Privacy()

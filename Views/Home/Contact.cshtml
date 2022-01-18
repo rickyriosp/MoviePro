@@ -1,0 +1,72 @@
+﻿@using MovieProMVC.Models.ViewModels
+
+@model ContactMe
+
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<!-- page title -->
+<section class="section section--first section--bg" data-bg="../../img/section/section.jpg">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="section__wrap">
+					<!-- section title -->
+					<h1 class="section__title">Contact Form</h1>
+					<!-- end section title -->
+
+					<!-- breadcrumb -->
+					<ul class="breadcrumb">
+						<li class="breadcrumb__item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+						<li class="breadcrumb__item breadcrumb__item--active">Contact</li>
+					</ul>
+					<!-- end breadcrumb -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end page title -->
+
+<!-- contacts -->
+<section class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<form asp-action="Contact" class="form form--contacts">
+					<div class="control-group">
+						<div class="form-group">
+							<span asp-validation-for="Name" class="text-danger" style="color: indianred;"></span>
+							<input asp-for="Name" type="text" class="form__input" placeholder="Your Name">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="form-group">
+							<span asp-validation-for="Email" class="text-danger" style="color: indianred;"></span>
+							<input asp-for="Email" type="text" class="form__input" placeholder="Email">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="form-group">
+							<span asp-validation-for="Subject" class="text-danger" style="color: indianred;"></span>
+							<input asp-for="Subject" type="text" class="form__input" placeholder="Subject">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="form-group">
+							<span asp-validation-for="Message" class="text-danger" style="color: indianred;"></span>
+							<textarea asp-for="Message" class="form__textarea" placeholder="Type your message..."></textarea>
+						</div>
+					</div>
+
+					<button type="submit" class="form__btn">Send</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end contacts -->
