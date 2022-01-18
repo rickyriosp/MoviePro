@@ -4,5 +4,27 @@
     ViewData["Title"] = "Confirm email";
 }
 
+@*
 <h1>@ViewData["Title"]</h1>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+*@
+
+<!-- details -->
+<section class="section details" style="height: 500px;">
+	<!-- details background -->
+	<div class="details__bg" style="background:url('../../img/section/section.jpg'); opacity: 1;"></div>
+	<!-- end details background -->
+
+	<!-- details content -->
+	<div class="container">
+		<div class="row">
+			<!-- title -->
+			<div class="col-12">
+				<h1 class="details__title">@Model.StatusMessage</h1>   
+			</div>
+			<!-- end title -->
+        </div>
+    </div>
+    <!-- end details content -->
+</section>
+<!-- end details -->
