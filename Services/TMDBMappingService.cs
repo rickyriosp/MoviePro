@@ -230,7 +230,9 @@ namespace MovieProMVC.Services
         {
             if (string.IsNullOrEmpty(path)) return _appSettings.MovieProSettings.DefaultAvatarImage;
 
-            return path.Substring(1);
+            if (path.Contains("https")) return path.Substring(1);
+
+            return $"{_appSettings.TMDBSettings.BaseImagePath}/{_appSettings.MovieProSettings.DefaultPosterSize}/{path}";
         }
 
     }
