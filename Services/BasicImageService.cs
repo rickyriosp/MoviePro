@@ -11,6 +11,10 @@ namespace MovieProMVC.Services
             _httpClient = httpClient;
         }
 
+        public string ContentType(IFormFile file)
+        {
+            return file?.ContentType;
+        }
         public string DecodeImage(byte[] poster, string contentType)
         {
             if (poster == null) return null;
@@ -27,6 +31,12 @@ namespace MovieProMVC.Services
             await poster.CopyToAsync(memoryStream);
 
             return memoryStream.ToArray();
+        }
+
+        public async Task<byte[]> EncodeImageAsync(string fileName)
+        {
+            var file = $"{Directory.GetCurrentDirectory()}/wwwroot/img/{fileName}";
+            return await File.ReadAllBytesAsync(file);
         }
 
         public async Task<byte[]> EncodeImageUrlAsync(string imageUrl)

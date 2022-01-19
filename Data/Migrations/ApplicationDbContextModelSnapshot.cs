@@ -248,11 +248,9 @@ namespace MovieProMVC.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<byte[]>("Backdrop")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("BackdropType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Country")
@@ -271,11 +269,9 @@ namespace MovieProMVC.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<byte[]>("Poster")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("PosterType")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Rating")
@@ -288,7 +284,6 @@ namespace MovieProMVC.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("TagLine")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
@@ -296,7 +291,6 @@ namespace MovieProMVC.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("TrailerUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<float>("VoteAverage")

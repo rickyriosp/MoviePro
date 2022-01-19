@@ -1,9 +1,12 @@
 ﻿@using MovieProMVC.Enums
 @using MovieProMVC.Models.Database
 @using MovieProMVC.Services.Interfaces
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 
 @inject IImageService _imageService;
-@model List<Movie>;
+@model IPagedList<Movie>;
 
 @{
     ViewData["Title"] = "Library";
@@ -97,3 +100,21 @@
     </div>
 </div>
 <!-- end catalog -->
+
+<!-- Add Paging controls here -->
+<div class="row">
+    <div class="col h3">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+         new PagedListRenderOptions
+         {
+             LiElementClasses = new string[] { "page-item" },
+             PageClasses = new string[] { "page-link" }
+         })
+    </div>
+</div>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MovieProMVC.Data;
+using MovieProMVC.Enums;
 using MovieProMVC.Models.Database;
 using MovieProMVC.Models.Settings;
 using MovieProMVC.Services.Interfaces;
@@ -80,15 +81,25 @@ namespace MovieProMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MovieId,Title,TagLine,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Poster,PosterType,Backdrop,BackdropType,TrailerUrl")] Movie movie, int collectionId)
+        public async Task<IActionResult> Create([Bind("Title,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Genres,Country,PosterFile,BackdropFile,TrailerUrl")] Movie movie, int collectionId)
         {
             if (ModelState.IsValid)
             {
-                movie.PosterType = movie.PosterFile?.ContentType;
-                movie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile);
+                // Use the _imageService to store the incoming user specified image
+                movie.PosterType = _imageService.ContentType(movie.PosterFile) ?? 
+                                   Path.GetExtension(_appSettings.MovieProSettings.DefaultMoviePoster);
+                movie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile) ??
+                               await _imageService.EncodeImageAsync(_appSettings.MovieProSettings.DefaultMoviePoster);
 
-                movie.BackdropType = movie.BackdropFile?.ContentType;
-                movie.Backdrop = await _imageService.EncodeImageAsync(movie.BackdropFile);
+                movie.BackdropType = _imageService.ContentType(movie.BackdropFile) ??
+                                   Path.GetExtension(_appSettings.MovieProSettings.DefaultMovieBackdrop);
+                movie.Backdrop = await _imageService.EncodeImageAsync(movie.BackdropFile) ??
+                               await _imageService.EncodeImageAsync(_appSettings.MovieProSettings.DefaultMovieBackdrop);
+
+                movie.TrailerUrl = movie.TrailerUrl ?? _appSettings.MovieProSettings.DefaultTrailerUrl;
+
+                // Set time Kind to UTC --> Npgsql throws error otherwise
+                movie.ReleaseDate = movie.ReleaseDate.ToUniversalTime();
 
                 _context.Add(movie);
                 await _context.SaveChangesAsync();

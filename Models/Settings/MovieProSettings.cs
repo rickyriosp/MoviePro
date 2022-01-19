@@ -5,7 +5,10 @@
         public string TmdbApiKey { get; set; }
         public string DefaultBackdropSize { get; set; }
         public string DefaultPosterSize { get; set; }
+        public string DefaultMoviePoster { get; set; }
+        public string DefaultMovieBackdrop { get; set; }
         public string DefaultYouTubeKey { get; set; }
+        public string DefaultTrailerUrl { get; set; }
         public string DefaultCastImage { get; set; }
         public string DefaultAvatarImage { get; set; }
         public DefaultCollection DefaultCollection { get; set; }
