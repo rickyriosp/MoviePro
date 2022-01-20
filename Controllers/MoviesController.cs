@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MovieProMVC.Data;
-using MovieProMVC.Enums;
 using MovieProMVC.Models.Database;
 using MovieProMVC.Models.Settings;
 using MovieProMVC.Services.Interfaces;
+using X.PagedList;
 
 namespace MovieProMVC.Controllers
 {
@@ -57,7 +57,7 @@ namespace MovieProMVC.Controllers
                 var movieDetail = await _tmdbMovieService.MovieDetailAsync((int)id);
                 movie = await _tmdbMappingService.MapMovieDetailAsync(movieDetail);
             }
-            
+
             if (movie == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace MovieProMVC.Controllers
             if (ModelState.IsValid)
             {
                 // Use the _imageService to store the incoming user specified image
-                movie.PosterType = _imageService.ContentType(movie.PosterFile) ?? 
+                movie.PosterType = _imageService.ContentType(movie.PosterFile) ??
                                    Path.GetExtension(_appSettings.MovieProSettings.DefaultMoviePoster);
                 movie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile) ??
                                await _imageService.EncodeImageAsync(_appSettings.MovieProSettings.DefaultMoviePoster);
@@ -214,7 +214,7 @@ namespace MovieProMVC.Controllers
                 }
                 return RedirectToAction("Details", "Movies", new { id = movie.Id, local = true });
             }
-            
+
             ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
 
             return View(movie);
@@ -285,9 +285,11 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Movies/Library
-        public async Task<IActionResult> Library()
+        public async Task<IActionResult> Library(int? page)
         {
-            var movies = await _context.Movie.ToListAsync();
+            var pageNumber = page ?? 1;
+            var pageSize = 1;
+            var movies = await _context.Movie.ToPagedListAsync(pageNumber, pageSize);
 
             return View(movies);
         }

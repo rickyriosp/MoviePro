@@ -37,7 +37,7 @@ namespace MovieProMVC.Services
                 actor.birthday = "Not Available";
             else
                 actor.birthday = DateTime.Parse(actor.birthday).ToString("MMM dd, yyyy");
-            
+
             return actor;
         }
 
@@ -135,7 +135,7 @@ namespace MovieProMVC.Services
                             ReviewId = review.id,
                             Author = review.author,
                             AvatarPath = BuildAvatarImage(review.author_details.avatar_path),
-                            Rating = review.author_details.rating ?? (int)MovieRating.G,
+                            Rating = review.author_details.rating ?? (int)MovieRating.NR,
                             Content = review.content,
                             Created_at = DateTime.Parse(review.created_at),
                             Updated_at = DateTime.Parse(review.updated_at),
@@ -153,8 +153,8 @@ namespace MovieProMVC.Services
 
         private string BuildTrailerPath(Videos videos)
         {
-            var videoKey = videos.results.FirstOrDefault(r => r.type.ToLower().Trim() == "trailer" && r.key != "" )?.key;
-            return string.IsNullOrEmpty(videoKey) ? videoKey : $"{_appSettings.TMDBSettings.BaseYouTubePath}{videoKey}";
+            var videoKey = videos.results.FirstOrDefault(r => r.type.ToLower().Trim() == "trailer" && r.key != "")?.key;
+            return string.IsNullOrEmpty(videoKey) ? _appSettings.MovieProSettings.DefaultTrailerUrl : $"{_appSettings.TMDBSettings.BaseYouTubePath}{videoKey}";
         }
 
         private async Task<byte[]> EncodeBackdropImageAsync(string path)
@@ -190,7 +190,7 @@ namespace MovieProMVC.Services
             }
             return movieRating;
         }
-        
+
         private MovieGenre[] GetGenres(Genre[] genres)
         {
             List<MovieGenre> movieGenres = new List<MovieGenre>();

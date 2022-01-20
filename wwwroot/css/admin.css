@@ -820,53 +820,63 @@ ul {
   align-items: center;
   background-color: #28282d;
   height: 40px;
-  width: 240px;
+  /*width: 240px;*/
   border-radius: 4px;
 }
 .paginator__item {
   margin: 0;
 }
-.paginator__item a {
-  font-size: 14px;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  color: rgba(255,255,255,0.5);
-  text-align: center;
-  border-radius: 4px;
+.paginator__item a,
+.paginator__item span {
+    font-size: 14px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    border-radius: 4px;
 }
-.paginator__item:hover a {
-  color: #fff;
+.paginator__item:hover a,
+.paginator__item:hover span {
+    color: #fff;
 }
 .paginator__item--prev,
-.paginator__item--next {
-  position: relative;
-  height: 40px;
-  transition: 0.4s ease;
+.paginator__item--next,
+.PagedList-skipToFirst,
+.PagedList-skipToLast {
+    position: relative;
+    height: 40px;
+    transition: 0.4s ease;
 }
 .paginator__item--prev svg,
-.paginator__item--next svg {
-  width: 18px;
-  height: auto;
-  fill: rgba(255,255,255,0.5);
-  transition: 0.4s ease;
+.paginator__item--next svg,
+.PagedList-skipToFirst svg ,
+.PagedList-skipToLast svg {
+    width: 18px;
+    height: auto;
+    fill: rgba(255,255,255,0.5);
+    transition: 0.4s ease;
 }
 .paginator__item--prev:hover svg,
-.paginator__item--next:hover svg {
-  fill: #fff;
+.paginator__item--next:hover svg,
+.PagedList-skipToFirst svg,
+.PagedList-skipToLast svg {
+    fill: #fff;
 }
-.paginator__item--active a {
-  color: #fff;
-  cursor: default;
-  font-weight: 500;
-  background-image: linear-gradient(90deg, #ff55a5 0%, #ff5860 100%);
-  box-shadow: 0 0 15px 0 rgba(255,88,96,0.5);
+.paginator__item--active a,
+.paginator__item--active span {
+    color: #fff;
+    cursor: default;
+    font-weight: 500;
+    background-image: linear-gradient(90deg, #ff55a5 0%, #ff5860 100%);
+    box-shadow: 0 0 15px 0 rgba(255,88,96,0.5);
 }
-.paginator__item--active a:hover {
-  color: #fff;
+.paginator__item--active a:hover,
+.paginator__item--active span:hover {
+    color: #fff;
 }
 /*==============================
 	Form

@@ -40,7 +40,7 @@ namespace MovieProMVC.Controllers
                 Trending = await _tmdbMovieService.SearchMoviesTrendingAsync(count),
                 Genres = await _tmdbMovieService.GetAllMovieGenresAsync(),
                 ActorsPopular = await _tmdbMovieService.SearchActorsAsync(count),
-        };
+            };
 
             return View(data);
         }
@@ -84,7 +84,7 @@ namespace MovieProMVC.Controllers
             ViewData["ErrorMessage"] = $"Error occurred. The ErrorCode is: {code}";
             ViewData["Path"] = statusCodeResult.OriginalPath;
             ViewData["Query"] = statusCodeResult.OriginalQueryString;
-            
+
             if (code == 404)
             {
                 return View("404");

@@ -43,7 +43,7 @@ namespace MovieProMVC.Services
         {
             var client = _httpClient.CreateClient();
             var response = await client.GetAsync(imageUrl);
-            
+
             using Stream stream = await response.Content.ReadAsStreamAsync();
             var memoryStream = new MemoryStream();
             await stream.CopyToAsync(memoryStream);
