@@ -35,11 +35,11 @@ namespace MovieProMVC.Models.Database
 
         [NotMapped]
         [Display(Name = "Poster Image")]
-        public IFormFile PosterFile { get; set; }
+        public IFormFile? PosterFile { get; set; }
 
         [NotMapped]
         [Display(Name = "Backdrop Image")]
-        public IFormFile BackdropFile { get; set; }
+        public IFormFile? BackdropFile { get; set; }
 
         public ICollection<MovieCollection> Collections { get; set; } = new HashSet<MovieCollection>();
         public ICollection<MovieCast> Cast { get; set; } = new HashSet<MovieCast>();

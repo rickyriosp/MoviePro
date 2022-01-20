@@ -119,6 +119,8 @@ namespace MovieProMVC.Controllers
                 return NotFound();
             }
 
+            ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
+
             var movie = await _context.Movie.FindAsync(id);
             if (movie == null)
             {
@@ -132,7 +134,7 @@ namespace MovieProMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MovieId,Title,TagLine,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Poster,PosterType,Backdrop,BackdropType,TrailerUrl")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Overview,RunTime,ReleaseDate,Rating,VoteAverage,Genres,Country,TrailerUrl")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -143,19 +145,60 @@ namespace MovieProMVC.Controllers
             {
                 try
                 {
+                    // The original movie
+                    var newMovie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == movie.Id);
+
                     if (movie.PosterFile is not null)
                     {
-                        movie.PosterType = movie.PosterFile?.ContentType;
-                        movie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile);
+                        newMovie.PosterType = movie.PosterFile?.ContentType;
+                        newMovie.Poster = await _imageService.EncodeImageAsync(movie.PosterFile);
                     }
 
                     if (movie.BackdropFile is not null)
                     {
-                        movie.BackdropType = movie.BackdropFile?.ContentType;
-                        movie.Backdrop = await _imageService.EncodeImageAsync(movie.BackdropFile);
+                        newMovie.BackdropType = movie.BackdropFile?.ContentType;
+                        newMovie.Backdrop = await _imageService.EncodeImageAsync(movie.BackdropFile);
                     }
 
-                    _context.Update(movie);
+                    if (newMovie.Title != movie.Title)
+                    {
+                        newMovie.Title = movie.Title;
+                    }
+                    if (newMovie.Overview != movie.Overview)
+                    {
+                        newMovie.Overview = movie.Overview;
+                    }
+                    if (newMovie.RunTime != movie.RunTime)
+                    {
+                        newMovie.RunTime = movie.RunTime;
+                    }
+                    if (newMovie.ReleaseDate != movie.ReleaseDate)
+                    {
+                        // Set time Kind to UTC --> Npgsql throws error otherwise
+                        newMovie.ReleaseDate = movie.ReleaseDate.ToUniversalTime();
+                    }
+                    if (newMovie.Rating != movie.Rating)
+                    {
+                        newMovie.Rating = movie.Rating;
+                    }
+                    if (newMovie.VoteAverage != movie.VoteAverage)
+                    {
+                        newMovie.VoteAverage = movie.VoteAverage;
+                    }
+                    if (newMovie.Genres != movie.Genres)
+                    {
+                        newMovie.Genres = movie.Genres;
+                    }
+                    if (newMovie.Country != movie.Country)
+                    {
+                        newMovie.Country = movie.Country;
+                    }
+                    if (newMovie.TrailerUrl != movie.TrailerUrl)
+                    {
+                        newMovie.TrailerUrl = movie.TrailerUrl;
+                    }
+
+                    _context.Update(newMovie);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -171,6 +214,9 @@ namespace MovieProMVC.Controllers
                 }
                 return RedirectToAction("Details", "Movies", new { id = movie.Id, local = true });
             }
+            
+            ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
+
             return View(movie);
         }
 
