@@ -135,7 +135,7 @@ namespace MovieProMVC.Services
                             ReviewId = review.id,
                             Author = review.author,
                             AvatarPath = BuildAvatarImage(review.author_details.avatar_path),
-                            Rating = review.author_details.rating,
+                            Rating = review.author_details.rating ?? (int)MovieRating.G,
                             Content = review.content,
                             Created_at = DateTime.Parse(review.created_at),
                             Updated_at = DateTime.Parse(review.updated_at),
