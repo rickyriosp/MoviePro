@@ -164,7 +164,15 @@
 											</li>
 											<!-- end card -->
 										}
-									</ul>>
+										@if (!Model.Cast.Any())
+										{
+											<!-- card -->
+											<li class="reviews__item">
+												<p class="reviews__text">No crew found.</p>
+											</li>
+											<!-- end card -->
+										}
+									</ul>
 								</div>
 							</div>
 							<!-- end cast -->
@@ -199,7 +207,15 @@
 											</li>
 											<!-- end card -->
 										}
-									</ul>>
+										@if (!Model.Crew.Any())
+										{
+											<!-- card -->
+											<li class="reviews__item">
+												<p class="reviews__text">No crew found.</p>
+											</li>
+											<!-- end card -->
+										}
+									</ul>
 								</div>
 							</div>
 							<!-- end crew -->
