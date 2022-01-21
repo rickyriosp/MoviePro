@@ -120,7 +120,10 @@ namespace MovieProMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                var pageNumber = 1;
+                var pageSize = 12;
+                var movies = await _context.Movie.ToPagedListAsync(pageNumber, pageSize);
+                return View("EditIndex", movies);
             }
 
             ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");

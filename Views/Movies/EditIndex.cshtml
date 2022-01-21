@@ -1,0 +1,122 @@
+﻿@using MovieProMVC.Enums
+@using MovieProMVC.Models.Database
+@using MovieProMVC.Services.Interfaces
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+
+@inject IImageService _imageService;
+@model IPagedList<Movie>;
+
+@{
+    ViewData["Title"] = "Library";
+}
+
+<!-- page title -->
+<section class="section section--first section--bg" data-bg="../../img/section/section.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section__wrap">
+                    <!-- section title -->
+                    <h1 class="section__title">Edit movie</h1>
+                    <!-- end section title -->
+                    <!-- breadcrumb -->
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb__item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="breadcrumb__item breadcrumb__item--active">Edit Movie</li>
+                    </ul>
+                    <!-- end breadcrumb -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end page title -->
+
+<!-- collection name -->
+<div class="content__head">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- content title -->
+                <h2 class="content__title">All</h2>
+                <!-- end content title -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end collection name -->
+
+<!-- catalog -->
+<div class="catalog">
+    <div class="container">
+        <div class="row row--grid">
+            @foreach (var movie in Model)
+            {
+                <!-- card -->
+                <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" asp-route-local="true" class="card__cover">
+                            <img src="@_imageService.DecodeImage(movie.Poster, movie.PosterType)" alt="Movie Poster">
+                            <span class="card__play">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z" /></svg>
+                            </span>
+                        </a>
+                        <div class="card__content">
+                            <h3 class="card__title"><a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" asp-route-local="true">@movie.Title</a></h3>
+                            <span class="card__category">
+                                @foreach (var genre in movie.Genres)
+							    {
+								    <a href="#">@genre.GetDescription()</a>
+							    }
+                            </span>
+                            <span class="card__rate">@movie.VoteAverage</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card -->
+            }
+        </div>
+
+        <div class="row">
+            <!-- paginator -->
+            <div class="col-12">
+                @*<ul class="paginator">
+                    <li class="paginator__item paginator__item--prev">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z" /></svg></a>
+                    </li>
+                    <li class="paginator__item paginator__item--active"><a href="#">1</a></li>
+                    <li class="paginator__item"><a href="#">2</a></li>
+                    <li class="paginator__item"><a href="#">3</a></li>
+                    <li class="paginator__item"><a href="#">4</a></li>
+                    <li class="paginator__item paginator__item--next">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z" /></svg></a>
+                    </li
+                </ul>*@
+                @Html.PagedListPager(Model, page => Url.Action("Library", new { page = page }),
+                    new PagedListRenderOptions
+                    {
+                        ContainerDivClasses = new string[] { "" },
+                        UlElementClasses = new string[] { "paginator" },
+                        LiElementClasses = new string[] { "paginator__item" },
+                        PageClasses = new string[] { "" },
+                        ActiveLiElementClass = "paginator__item--active",
+                        PreviousElementClass = "paginator__item--prev",
+                        NextElementClass = "paginator__item--next",
+                        // DisplayLinkToPreviousPage => X.PagedList.Web.Common.PagedListDisplayMode.Always = 0
+                        DisplayLinkToPreviousPage = 0,
+                        DisplayLinkToFirstPage = 0,
+                        DisplayLinkToLastPage = 0,
+                        DisplayLinkToNextPage = 0,
+                        LinkToFirstPageFormat = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 256 256\"><path d=\"M205.7,202.3a8.1,8.1,0,0,1,0,11.4,8.2,8.2,0,0,1-11.4,0l-80-80a8.1,8.1,0,0,1,0-11.4l80-80a8.1,8.1,0,0,1,11.4,11.4L131.3,128ZM51.3,128l74.4-74.3a8.1,8.1,0,0,0-11.4-11.4l-80,80a8.1,8.1,0,0,0,0,11.4l80,80a8.2,8.2,0,0,0,11.4,0,8.1,8.1,0,0,0,0-11.4Z\"/></svg></svg>",
+                        LinkToPreviousPageFormat = "<svg xmlns=\"http://www.w3.org/2000/svg\" enable-background=\"new 0 0 24 24\" viewBox=\"0 0 24 24\"><path d=\"M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z\" /></svg>",
+                        LinkToNextPageFormat = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z\" /></svg>",
+                        LinkToLastPageFormat = "<svg xmlns=\"http://www.w3.org/2000/svg\"  width=\"18\" height=\"18\" viewBox=\"0 0 256 256\"><path d=\"M141.7,133.7l-80,80a8.2,8.2,0,0,1-11.4,0,8.1,8.1,0,0,1,0-11.4L124.7,128,50.3,53.7A8.1,8.1,0,0,1,61.7,42.3l80,80A8.1,8.1,0,0,1,141.7,133.7Zm80-11.4-80-80a8.1,8.1,0,0,0-11.4,11.4L204.7,128l-74.4,74.3a8.1,8.1,0,0,0,0,11.4,8.2,8.2,0,0,0,11.4,0l80-80A8.1,8.1,0,0,0,221.7,122.3Z\"/></svg>",
+                    })
+            </div>
+            <!-- end paginator -->
+        </div>
+    </div>
+</div>
+<!-- end catalog -->
