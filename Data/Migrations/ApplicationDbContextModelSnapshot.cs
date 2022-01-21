@@ -236,7 +236,7 @@ namespace MovieProMVC.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Collection");
+                    b.ToTable("Collection", (string)null);
                 });
 
             modelBuilder.Entity("MovieProMVC.Models.Database.Movie", b =>
@@ -298,7 +298,7 @@ namespace MovieProMVC.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movie");
+                    b.ToTable("Movie", (string)null);
                 });
 
             modelBuilder.Entity("MovieProMVC.Models.Database.MovieCast", b =>
@@ -335,7 +335,7 @@ namespace MovieProMVC.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieCast");
+                    b.ToTable("MovieCast", (string)null);
                 });
 
             modelBuilder.Entity("MovieProMVC.Models.Database.MovieCollection", b =>
@@ -361,7 +361,7 @@ namespace MovieProMVC.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieCollection");
+                    b.ToTable("MovieCollection", (string)null);
                 });
 
             modelBuilder.Entity("MovieProMVC.Models.Database.MovieCrew", b =>
@@ -398,7 +398,7 @@ namespace MovieProMVC.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieCrew");
+                    b.ToTable("MovieCrew", (string)null);
                 });
 
             modelBuilder.Entity("MovieProMVC.Models.Database.MovieReview", b =>
@@ -441,7 +441,7 @@ namespace MovieProMVC.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieReview");
+                    b.ToTable("MovieReview", (string)null);
                 });
 
             modelBuilder.Entity("MovieProMVC.Models.Database.MovieSimilar", b =>
@@ -474,7 +474,7 @@ namespace MovieProMVC.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("MovieSimilar");
+                    b.ToTable("MovieSimilar", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
