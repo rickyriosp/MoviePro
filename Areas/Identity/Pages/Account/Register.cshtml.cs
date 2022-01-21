@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using MovieProMVC.Enums;
 using MovieProMVC.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -18,6 +19,7 @@ namespace MovieProMVC.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<IdentityUser> _userStore;
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
@@ -110,8 +112,10 @@ namespace MovieProMVC.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                // Assign default User role
+                var roleResult = await _userManager.AddToRoleAsync(user, MovieRole.User.ToString());
 
-                if (result.Succeeded)
+                if (result.Succeeded && roleResult.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 

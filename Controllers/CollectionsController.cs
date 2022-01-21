@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -20,6 +21,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Collections
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Index()
         {
             var defaultCollectionName = _appSettings.MovieProSettings.DefaultCollection.Name;
@@ -44,6 +46,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Collections/Edit/5
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,6 +103,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Collections/Delete/5
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

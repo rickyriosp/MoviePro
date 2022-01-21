@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MovieProMVC.Data;
+using MovieProMVC.Enums;
 using MovieProMVC.Models.Database;
 using MovieProMVC.Models.Settings;
 
@@ -24,9 +25,16 @@ namespace MovieProMVC.Services
 
         public async Task ManageDataAsync()
         {
+            // Task 1: Create DB from the Migrations
             await UpdateDatabaseAsync();
+
+            // Task 2: Seed a few Roles into the system
             await SeedRolesAsync();
+
+            // Task 3: Seed a few Users into the system
             await SeedUsersAsync();
+
+            // Task 4: Seed default Collection into the system
             await SeedCollectionsAsync();
         }
 
@@ -37,16 +45,25 @@ namespace MovieProMVC.Services
 
         private async Task SeedRolesAsync()
         {
+            // If there are already Roles in the system: do nothing
             if (_dbContext.Roles.Any()) return;
 
-            var adminRole = _appSettings.MovieProSettings.DefaultCredentials.Role;
-            await _roleManager.CreateAsync(new IdentityRole(adminRole));
+            // Otherwise we want to create a few Roles
+            foreach (var role in Enum.GetNames(typeof(MovieRole)))
+            {
+                var adminRole = _appSettings.MovieProSettings.DefaultCredentials.Role;
+                // Interact with the Role Manager to create Roles
+                await _roleManager.CreateAsync(new IdentityRole(role));
+            }
         }
 
         private async Task SeedUsersAsync()
         {
+            // If there are already Users in the system: do nothing
             if (_userManager.Users.Any()) return;
 
+            // Otherwise we want to create a few Users
+            // Step 1: Create a new instance of user
             var credentials = _appSettings.MovieProSettings.DefaultCredentials;
             var newUser = new IdentityUser()
             {
@@ -55,14 +72,24 @@ namespace MovieProMVC.Services
                 EmailConfirmed = true
             };
 
-            await _userManager.CreateAsync(newUser, credentials.Password);
-            await _userManager.AddToRoleAsync(newUser, credentials.Role);
+            // Step 2: Interact with the User Manager to create a new User defined by adminUser
+            // IdentityUser Password needs UpperCase, Number, and Symbol
+            var createdUser = await _userManager.CreateAsync(newUser, credentials.Password);
+
+            // Step 3: Add the new User to the Administrator role
+            if (await _roleManager.RoleExistsAsync(credentials.Role) && createdUser.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, credentials.Role);
+            }
         }
 
         private async Task SeedCollectionsAsync()
         {
+            // If there are already Collections in the system: do nothing
             if (_dbContext.Collection.Any()) return;
 
+            // Otherwise we want to create a new Collection
+            // Step 1: Create a new instance of Collection
             _dbContext.Add(new Collection()
             {
                 Name = _appSettings.MovieProSettings.DefaultCollection.Name,

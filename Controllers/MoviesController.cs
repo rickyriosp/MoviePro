@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MovieProMVC.Data;
+using MovieProMVC.Enums;
 using MovieProMVC.Models.Database;
 using MovieProMVC.Models.Settings;
 using MovieProMVC.Services.Interfaces;
@@ -69,6 +71,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Movies/Create
+        [Authorize(Roles = "Administrator, User")]
         public IActionResult Create()
         {
             ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
@@ -112,6 +115,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -221,6 +225,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Movies/Delete/5
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -250,6 +255,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Movies/Import
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Import()
         {
             var movies = await _context.Movie.ToListAsync();
@@ -285,6 +291,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: Movies/Library
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Library(int? page)
         {
             var pageNumber = page ?? 1;

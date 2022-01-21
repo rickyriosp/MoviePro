@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieProMVC.Data;
@@ -16,6 +17,7 @@ namespace MovieProMVC.Controllers
         }
 
         // GET: MovieCollections/5
+        [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Index(int? id)
         {
             id ??= (await _context.Collection.FirstOrDefaultAsync(c => c.Name.ToUpper() == "ALL")).Id;
