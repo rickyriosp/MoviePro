@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = ConnectionService.GetConnectionString(builder.Configuration);
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -17,8 +18,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 // Register and inject an IOptions of type AppSettings model to easily access the configuration
