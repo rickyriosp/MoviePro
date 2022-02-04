@@ -81,6 +81,44 @@ namespace MovieProMVC.Services
             {
                 await _userManager.AddToRoleAsync(newUser, credentials.Role);
             }
+
+            // Repeat for Demo User
+            // Step 1: Create a new instance of user
+            newUser = new IdentityUser()
+            {
+                Email = "demo.user@mailinator.com",
+                UserName = "demo.user@mailinator.com",
+                EmailConfirmed = true
+            };
+
+            // Step 2: Interact with the User Manager to create a new User defined by adminUser
+            // IdentityUser Password needs UpperCase, Number, and Symbol
+            createdUser = await _userManager.CreateAsync(newUser, "Password123!");
+
+            // Step 3: Add the new User to the User role
+            if (await _roleManager.RoleExistsAsync(MovieRole.User.ToString()) && createdUser.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, MovieRole.User.ToString());
+            }
+
+            // Repeat for Demo Admin
+            // Step 1: Create a new instance of user
+            newUser = new IdentityUser()
+            {
+                Email = "demo.admin@mailinator.com",
+                UserName = "demo.admin@mailinator.com",
+                EmailConfirmed = true
+            };
+
+            // Step 2: Interact with the User Manager to create a new User defined by adminUser
+            // IdentityUser Password needs UpperCase, Number, and Symbol
+            createdUser = await _userManager.CreateAsync(newUser, "Password123!");
+
+            // Step 3: Add the new User to the Administrator role
+            if (await _roleManager.RoleExistsAsync(MovieRole.Administrator.ToString()) && createdUser.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(newUser, MovieRole.Administrator.ToString());
+            }
         }
 
         private async Task SeedCollectionsAsync()

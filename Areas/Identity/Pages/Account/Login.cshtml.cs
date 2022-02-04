@@ -13,11 +13,13 @@ namespace MovieProMVC.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -128,6 +130,38 @@ namespace MovieProMVC.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        public async Task<IActionResult> OnGetLoginDemoUserAsync(string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+
+            //get user name from AD
+            //query identity user by username
+            var userName = "demo.user@mailinator.com";
+            var user = await _userManager.FindByNameAsync(userName);
+
+            //sign in user
+            await _signInManager.SignInAsync(user, isPersistent: true);
+
+            _logger.LogInformation("User logged in.");
+            return LocalRedirect(returnUrl);
+        }
+
+        public async Task<IActionResult> OnGetLoginDemoAdminAsync(string returnUrl = null)
+        {
+            returnUrl ??= Url.Content("~/");
+
+            //get user name from AD
+            //query identity user by username
+            var userName = "demo.admin@mailinator.com";
+            var user = await _userManager.FindByNameAsync(userName);
+
+            //sign in user
+            await _signInManager.SignInAsync(user, isPersistent: true);
+
+            _logger.LogInformation("User logged in.");
+            return LocalRedirect(returnUrl);
         }
     }
 }

@@ -37,6 +37,10 @@
                         </div>
                         
                         <button id="login-submit" type="submit" class="sign__btn w-100 btn btn-lg btn-primary">Login</button>
+
+                        <a type="button" class="sign__btn w-100 btn btn-lg btn-primary" asp-page-handler="LoginDemoUser">Login as Demo User</a>
+
+                        <a type="button" class="sign__btn w-100 btn btn-lg btn-primary" asp-page-handler="LoginDemoAdmin">Login as Demo Admin</a>
                         
                         <span class="sign__text">Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register!</a></span>
 
