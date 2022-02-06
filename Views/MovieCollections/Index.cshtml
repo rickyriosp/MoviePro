@@ -82,8 +82,8 @@
 
 					        @Html.ListBox("idsInCollection", @ViewBag.IdsInCollection, new { @style="background-color: #28282d; width: 100%;", @class="form-control js-example-basic-multiple main__table-text", @id="idsInCollection" })
                             <div class="d-flex flex-row justify-content-between">
-                                <button class="form__btn flex-fill">Up</button>
-                                <button class="form__btn flex-fill ml-2">Down</button>
+                                <button type="button" id="moveUpIn" class="form__btn flex-fill">Up</button>
+                                <button type="button" id="moveDownIn" class="form__btn flex-fill ml-2">Down</button>
                             </div>
 				        </div>
 			        </div>
@@ -117,8 +117,8 @@
 
 					        @Html.ListBox("idsNotInCollection", @ViewBag.IdsNotInCollection, new { @style="background-color: #28282d; width: 100%;", @class="form-control js-example-basic-multiple main__table-text" })
                             <div class="d-flex flex-row justify-content-between">
-                                <button class="form__btn flex-fill">Up</button>
-                                <button class="form__btn flex-fill ml-2">Down</button>
+                                <button type="button" id="moveUpNotIn" class="form__btn flex-fill">Up</button>
+                                <button type="button" id="moveDownNotIn" class="form__btn flex-fill ml-2">Down</button>
                             </div>
 				        </div>
 			        </div>
@@ -150,9 +150,7 @@
         }
 
         document.getElementById("Form").addEventListener("submit", onSubmit)
-    </script>
 
-    <script>
         $('.CollectionId').on('change', function() {
             let id = $('.CollectionId').val()
             var url = '@Url.Action("Index", "MovieCollections", new { id = "1" })'.split("/");
@@ -161,18 +159,14 @@
 
             window.location.href = url;
         });
-    </script>
 
-    <script>
         $(document).on("click", function(event){
             let $trigger = $("select");
             if($trigger !== event.target && !$trigger.has(event.target).length){
                 $("select").prop("selectedIndex", -1);
             }
         });
-    </script>
 
-    <script>
         $('#addToCollection').click(function(e) {
             var selItem = $('#idsNotInCollection').prop('selectedIndex');
             console.log(selItem);
@@ -189,9 +183,7 @@
                 $('#idsInCollection').prop('selectedIndex', -1);
             }
         });
-    </script>
 
-    <script>
         $('#removeFromCollection').click(function(e) {
             var selItem = $('#idsInCollection').prop('selectedIndex');
             if (selItem == -1) {
@@ -207,19 +199,66 @@
                 $('#idsInCollection').prop('selectedIndex', -1);
             }
         });
-    </script>
 
-    <script>
-        //$('select').click(function() {
-        //    console.log($(this).children().toArray());
-        
-        //    var selItem = $(this).prop('selectedIndex');
-        //    if (selItem == -1) {
-        //        window.alert("You must first select a movie in the collection.")
-        //    } else {
+        $('#moveUpIn').click(function() {
+            let arr = $('#idsInCollection').children().toArray();
+            let selItem = $('#idsInCollection').prop('selectedIndex');
 
-        //    }
-        //});
+            if (selItem == -1 || selItem == 0) {
+                //window.alert("You must first select a movie in the collection.")
+            } else {
+                let temp = arr[selItem];
+                arr[selItem] = arr[selItem - 1];
+                arr[selItem - 1] = temp;
+
+                $('#idsInCollection').empty().append(arr);
+            }
+        });
+
+        $('#moveUpNotIn').click(function() {
+            let arr = $('#idsNotInCollection').children().toArray();
+            let selItem = $('#idsNotInCollection').prop('selectedIndex');
+
+            if (selItem == -1 || selItem == 0) {
+                //window.alert("You must first select a movie in the collection.")
+            } else {
+                let temp = arr[selItem];
+                arr[selItem] = arr[selItem - 1];
+                arr[selItem - 1] = temp;
+
+                $('#idsNotInCollection').empty().append(arr);
+            }
+        });
+
+        $('#moveDownIn').click(function() {
+            let arr = $('#idsInCollection').children().toArray();
+            let selItem = $('#idsInCollection').prop('selectedIndex');
+
+            if (selItem == -1 || selItem == arr.length - 1) {
+                //window.alert("You must first select a movie in the collection.")
+            } else {
+                let temp = arr[selItem];
+                arr[selItem] = arr[selItem + 1];
+                arr[selItem + 1] = temp;
+
+                $('#idsInCollection').empty().append(arr);
+            }
+        });
+
+        $('#moveDownNotIn').click(function() {
+            let arr = $('#idsNotInCollection').children().toArray();
+            let selItem = $('#idsNotInCollection').prop('selectedIndex');
+
+            if (selItem == -1 || selItem == arr.length - 1) {
+                //window.alert("You must first select a movie in the collection.")
+            } else {
+                let temp = arr[selItem];
+                arr[selItem] = arr[selItem + 1];
+                arr[selItem + 1] = temp;
+
+                $('#idsNotInCollection').empty().append(arr);
+            }
+        });
     </script>
 
 
