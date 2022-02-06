@@ -25,7 +25,9 @@ namespace MovieProMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var defaultCollectionName = _appSettings.MovieProSettings.DefaultCollection.Name;
-            var collections = await _context.Collection.Where(c => c.Name != defaultCollectionName).ToListAsync();
+            var collections = await _context.Collection
+                .Where(c => c.Name != defaultCollectionName)
+                .ToListAsync();
 
             return View(collections);
         }
@@ -35,7 +37,7 @@ namespace MovieProMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description")] Collection collection)
+        public async Task<IActionResult> Create([Bind("Name,Description")] Collection collection)
         {
             if (ModelState.IsValid)
             {

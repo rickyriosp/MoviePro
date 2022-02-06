@@ -25,6 +25,26 @@ $(document).ready(function () {
 	});
 
 	/*==============================
+	Modal
+	==============================*/
+	$('.open-modal').magnificPopup({
+		fixedContentPos: true,
+		fixedBgPos: true,
+		overflowY: 'auto',
+		type: 'inline',
+		preloader: false,
+		focus: '#username',
+		modal: false,
+		removalDelay: 300,
+		mainClass: 'my-mfp-zoom-in',
+	});
+
+	$('.modal__btn--dismiss').on('click', function (e) {
+		e.preventDefault();
+		$.magnificPopup.close();
+	});
+
+	/*==============================
 	Select2
 	==============================*/
 	$('#Rating').select2({
@@ -41,6 +61,10 @@ $(document).ready(function () {
 	});
 
 	$('#CollectionId').select2({
+		placeholder: "Choose collection"
+	});
+
+	$('.CollectionId').select2({
 		placeholder: "Choose collection"
 	});
 

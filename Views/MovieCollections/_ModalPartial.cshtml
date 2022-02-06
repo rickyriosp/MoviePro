@@ -1,0 +1,30 @@
+﻿@using MovieProMVC.Models.Database
+
+@model Collection
+
+<!-- modal status -->
+<div id="modal-status" class="zoom-anim-dialog mfp-hide modal">
+	<h6 class="modal__title">Add Movie Collection</h6>
+
+	<form asp-controller="Collections" asp-action="Create" class="form">
+        <!-- name -->
+		<div class="col-12">
+			<input asp-for="Name" class="form-control form__input" placeholder="Name" />
+			<span asp-validation-for="Name" class="text-danger" style="color: indianred;"></span>
+		</div>
+
+		<!-- description -->
+		<div class="col-12">
+			<textarea asp-for="Description" class="form-control form__textarea" placeholder="Description" ></textarea>
+			<span asp-validation-for="Description" class="text-danger" style="color: indianred;"></span>
+		</div>
+
+        @*<p class="modal__text">Are you sure about immediately change status?</p>*@
+
+		<div class="modal__btns">
+			<button class="modal__btn modal__btn--apply" type="submit">Submit</button>
+			<button class="modal__btn modal__btn--dismiss" type="button">Close</button>
+		</div>
+    </form>
+</div>
+<!-- end modal status -->

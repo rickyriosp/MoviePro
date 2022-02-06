@@ -7,7 +7,7 @@ Primary use:	FlixGo Admin Template
 ----------------------------------------*/
 /*----------------------------------------
 [Table of contents]
-
+2. Sidebar
 3. Main
 4. Stats
 5. Dashbox
@@ -165,6 +165,287 @@ ul {
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+/*==============================
+	Sidebar
+==============================*/
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #28282d;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 101;
+    width: 280px;
+    transform: translateX(-100%);
+    transition: 0.4s ease;
+}
+
+.sidebar__logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 70px;
+    padding: 0 30px;
+    background-color: #28282d;
+    width: 100%;
+    position: relative;
+}
+
+.sidebar__logo:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    display: block;
+    background-image: linear-gradient(90deg, #ff55a5 0%, #ff5860 100%);
+    box-shadow: 0 0 20px 0 rgba(255,88,96,0.5);
+    pointer-events: none;
+}
+
+.sidebar__logo img {
+    width: 100%;
+    max-width: 100px;
+    display: block;
+}
+
+.sidebar__logo:hover {
+    background-color: #2b2b31;
+}
+
+.sidebar__user {
+    padding: 20px 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar__user-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+    margin-right: 12px;
+}
+
+.sidebar__user-img img {
+    width: 100%;
+}
+
+.sidebar__user-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.sidebar__user-title p {
+    color: #fff;
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.sidebar__user-title span {
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+}
+
+.sidebar__user-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,0.05);
+    opacity: 0.85;
+    margin-left: auto;
+}
+
+.sidebar__user-btn:hover {
+    opacity: 1;
+}
+
+.sidebar__user-btn svg {
+    fill: #fff;
+    width: 22px;
+    height: auto;
+}
+
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    padding: 30px;
+    width: 100%;
+}
+
+.sidebar__nav-link {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 300;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+}
+
+.sidebar__nav-link svg {
+    width: 18px;
+    height: auto;
+    margin-right: 12px;
+    transition: fill 0.4s ease;
+    fill: rgba(255,255,255,0.75);
+}
+
+.sidebar__nav-link:hover {
+    color: #ff55a5;
+}
+
+.sidebar__nav-link:hover svg {
+    fill: #ff55a5;
+}
+
+.sidebar__nav-link--active {
+    color: #ff55a5;
+    cursor: default;
+}
+
+.sidebar__nav-link--active svg {
+    fill: #ff55a5;
+}
+
+.sidebar__nav-item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.sidebar__nav-item:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar__nav-item.show .sidebar__nav-link {
+    color: #ff55a5;
+}
+
+.sidebar__dropdown {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.sidebar__dropdown-menu {
+    position: absolute;
+    background-color: #2b2b31;
+    padding: 15px 20px;
+    display: block;
+    width: 100%;
+    min-width: 200px;
+    text-align: left;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
+    transition: 0.4s ease;
+    margin-top: 0;
+    top: 100%;
+    max-height: 190px;
+    overflow: hidden !important;
+    border-radius: 4px;
+}
+
+.sidebar__dropdown-menu:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    display: block;
+    background-image: linear-gradient(90deg, #ff55a5 0%, #ff5860 100%);
+    box-shadow: 0 0 20px 0 rgba(255,88,96,0.5);
+}
+
+.sidebar__dropdown-menu li {
+    padding: 0;
+}
+
+.sidebar__dropdown-menu a {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    line-height: 40px;
+    display: block;
+    font-weight: 300;
+}
+
+.sidebar__dropdown-menu a:hover {
+    color: #ff55a5;
+}
+
+.sidebar__dropdown-menu.show {
+    z-index: 1000;
+    pointer-events: auto;
+    opacity: 1;
+    margin-top: 10px;
+}
+
+.sidebar__copyright {
+    margin-top: auto;
+    padding: 0 30px 20px;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+}
+
+.sidebar__copyright a {
+    color: rgba(255,255,255,0.5);
+}
+
+.sidebar__copyright a:hover {
+    text-decoration: underline;
+}
+
+.sidebar--active {
+    transform: translateX(0);
+    box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
+}
+
+@media (min-width: 1200px) {
+    .sidebar {
+        transform: translateX(0);
+        box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
+    }
+
+    .sidebar__logo {
+        height: 80px;
+    }
+
+    .sidebar__logo img {
+        max-width: 120px;
+    }
 }
 /*==============================
 	Main

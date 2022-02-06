@@ -22,7 +22,7 @@ namespace MovieProMVC.Controllers
         {
             id ??= (await _context.Collection.FirstOrDefaultAsync(c => c.Name.ToUpper() == "ALL")).Id;
 
-            ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name", id);
+            ViewData["CollectionsId"] = new SelectList(_context.Collection, "Id", "Name", id);
 
             var allMovieIds = await _context.Movie.Select(m => m.Id).ToListAsync();
 
@@ -35,7 +35,7 @@ namespace MovieProMVC.Controllers
             var movieIdsNotInCollection = allMovieIds.Except(movieIdsInCollection);
 
             var moviesInCollection = new List<Movie>();
-            moviesInCollection.ForEach(movieId => moviesInCollection.Add(_context.Movie.Find(movieId)));
+            movieIdsInCollection.ForEach(movieId => moviesInCollection.Add(_context.Movie.Find(movieId)));
 
             ViewData["IdsInCollection"] = new MultiSelectList(moviesInCollection, "Id", "Title");
 
@@ -44,7 +44,7 @@ namespace MovieProMVC.Controllers
                 .Where(m => movieIdsNotInCollection.Contains(m.Id))
                 .ToListAsync();
 
-            ViewData["IdsNotInCollection"] = new MultiSelectList(movieIdsNotInCollection, "Id", "Title");
+            ViewData["IdsNotInCollection"] = new MultiSelectList(moviesNotInCollection, "Id", "Title");
 
             return View();
         }
