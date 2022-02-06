@@ -142,6 +142,13 @@
 
     <script>
         function onSubmit () {
+            let collectionIndex = document.getElementById("id").selectedIndex;
+            if (collectionIndex == -1)
+            {
+                document.getElementById("id").selectedIndex = 0;
+                console.log(collectionIndex);
+            }
+
             let select = document.getElementById("idsInCollection").getElementsByTagName("option");
 
             for (let option of select) {
@@ -151,6 +158,13 @@
 
         document.getElementById("Form").addEventListener("submit", onSubmit)
 
+        $(document).on("click", function(event){
+            let $trigger = $("#idsInCollection, #idsNotInCollection");
+            if($trigger !== event.target && !$trigger.has(event.target).length){
+                $("#idsInCollection, #idsNotInCollection").prop("selectedIndex", -1);
+            }
+        });
+
         $('.CollectionId').on('change', function() {
             let id = $('.CollectionId').val()
             var url = '@Url.Action("Index", "MovieCollections", new { id = "1" })'.split("/");
@@ -158,13 +172,6 @@
             url = url.join("/");
 
             window.location.href = url;
-        });
-
-        $(document).on("click", function(event){
-            let $trigger = $("select");
-            if($trigger !== event.target && !$trigger.has(event.target).length){
-                $("select").prop("selectedIndex", -1);
-            }
         });
 
         $('#addToCollection').click(function(e) {
