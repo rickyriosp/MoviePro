@@ -2633,6 +2633,7 @@ ul {
 .mCS-custom-bar.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
   background-image: linear-gradient(180deg, #ff55a5 0%, #ff5860 100%);
   width: 2px;
+  width: 100%;
   border-radius: 0;
 }
 .mCS-custom-bar.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
@@ -2650,8 +2651,10 @@ ul {
   left: 0;
   right: 0;
   bottom: 0;
+  top: auto;
   background-color: rgba(255,255,255,0.05);
   height: 2px;
+  width: auto;
   overflow: hidden;
 }
 .mCS-custom-bar2.mCSB_scrollTools_horizontal {
@@ -2668,6 +2671,7 @@ ul {
   height: 2px;
   border-radius: 0;
   margin: 0;
+  width: auto;
 }
 .mCS-custom-bar2.mCSB_scrollTools_horizontal .mCSB_dragger:hover .mCSB_dragger_bar,
 .mCS-custom-bar2.mCSB_scrollTools_horizontal .mCSB_dragger:active .mCSB_dragger_bar,
