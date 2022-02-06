@@ -34,53 +34,116 @@
 </section>
 <!-- end page title -->
 
-@foreach (var collection in Model)
-{
-    <!-- collection name -->
-    <div class="content__head">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- content title -->
-                    <h2 class="content__title">@collection.Name</h2>
-                    <!-- end content title -->
-                </div>
+<!-- collection name -->
+<div class="content__head">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- content title -->
+                <h2 class="content__title">All</h2>
+                <!-- end content title -->
             </div>
         </div>
     </div>
-    <!-- end collection name -->
+</div>
+<!-- end collection name -->
 
-    <!-- catalog -->
-    <div class="catalog">
-        <div class="container">
-            <div class="row row--grid">
-                @foreach (var movie in collection.MovieCollections)
-                {
-                    <!-- card -->
-                    <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-                        <div class="card">
-                            <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Movie.Id" asp-route-local="true" class="card__cover">
-                                <img src="@_imageService.DecodeImage(movie.Movie.Poster, movie.Movie.PosterType)" alt="Movie Poster">
-                                <span class="card__play">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z" /></svg>
-                                </span>
-                            </a>
-                            <div class="card__content">
-                                <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Movie.Id" asp-route-local="true">@movie.Movie.Title</a></h3>
-                                <span class="card__category">
-                                    @foreach (var genre in movie.Movie.Genres)
-							        {
-								        <a href="#">@genre.GetDescription()</a>
-							        }
-                                </span>
-                                <span class="card__rate">@movie.Movie.VoteAverage</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end card -->
-                }
-            </div>
+<!-- catalog -->
+<div class="catalog">
+    <div class="container">
+        <div class="row row--grid">
+			<div class="main__table-wrap">
+				<table class="main__table">
+					<thead>
+						<tr>
+                            <th>ID</th>
+							<th>NAME</th>
+							<th>DESCRIPTION</th>
+                            <th>ACTIONS</th>
+						</tr>
+					</thead>
+
+					<tbody>
+					@foreach (var collection in Model)
+					{
+						<tr>
+                            <td width="10%">
+								<div class="main__table-text">@collection.Id</div>
+							</td>
+							<td width="35%">
+								<div class="main__table-text">@collection.Name</div>
+							</td>
+							<td width="40%">
+								<div class="main__table-text">@collection.Description</div>
+							</td>
+							<td width="15%">
+								<div class="main__table-btns">
+									<a href="#modal-status-@collection.Id" class="main__table-btn main__table-btn--edit open-modal">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5,18H9.24a1,1,0,0,0,.71-.29l6.92-6.93h0L19.71,8a1,1,0,0,0,0-1.42L15.47,2.29a1,1,0,0,0-1.42,0L11.23,5.12h0L4.29,12.05a1,1,0,0,0-.29.71V17A1,1,0,0,0,5,18ZM14.76,4.41l2.83,2.83L16.17,8.66,13.34,5.83ZM6,13.17l5.93-5.93,2.83,2.83L8.83,16H6ZM21,20H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"/></svg>
+									</a>
+									<a href="#modal-delete-@collection.Id" class="main__table-btn main__table-btn--delete open-modal">
+										<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Z"/></svg>
+									</a>
+								</div>
+							</td>
+						</tr>
+
+						<!-- modal status -->
+						<div id="modal-status-@collection.Id" class="zoom-anim-dialog mfp-hide modal">
+							<h6 class="modal__title">Edit Collection</h6>
+
+							<form asp-controller="Collections" asp-action="Edit" method="post" id="form-@collection.Id">
+								<input type="hidden" asp-for="@collection.Id" />
+
+								<!-- name -->
+								<div class="col-12">
+									<input asp-for="@collection.Name" class="form-control form__input" placeholder="Name" />
+									<span asp-validation-for="@collection.Name" class="text-danger" style="color: indianred;"></span>
+								</div>
+
+								<!-- description -->
+								<div class="col-12">
+									<textarea asp-for="@collection.Description" class="form-control form__textarea" placeholder="Description" ></textarea>
+									<span asp-validation-for="@collection.Description" class="text-danger" style="color: indianred;"></span>
+								</div>
+
+								<div class="modal__btns">
+									<button class="modal__btn modal__btn--apply" type="submit">Submit</button>
+									<button class="modal__btn modal__btn--dismiss" type="button">Close</button>
+								</div>
+							</form>
+						</div>
+						<!-- end modal status -->
+
+						<!-- modal delete -->
+						<div id="modal-delete-@collection.Id" class="zoom-anim-dialog mfp-hide modal">
+							<h6 class="modal__title">Delete Collection</h6>
+
+							<form asp-controller="Collections" asp-action="Delete" method="post" id="form-@collection.Id">
+								@Html.Hidden("id", @collection.Id)
+
+								<p class="modal__text">Are you sure to permanently delete this collection?</p>
+
+								<div class="modal__btns">
+									<button class="modal__btn modal__btn--apply" type="submit">Delete</button>
+									<button class="modal__btn modal__btn--dismiss" type="button">Dismiss</button>
+								</div>
+							</form>
+
+						</div>
+						<!-- end modal delete -->
+					}
+					</tbody>
+				</table>
+			</div>
         </div>
     </div>
-    <!-- end catalog -->
+</div>
+<!-- end catalog -->
+
+@section Scripts {
+	<script src="~/js/jquery.mCustomScrollbar.min.js"></script>
+	<script src="~/js/admin.js"></script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

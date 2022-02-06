@@ -6,7 +6,7 @@
 <div id="modal-status" class="zoom-anim-dialog mfp-hide modal">
 	<h6 class="modal__title">Add New Collection</h6>
 
-	<form asp-controller="Collections" asp-action="Create" class="form">
+	<form asp-controller="Collections" asp-action="Create" method="post">
         <!-- name -->
 		<div class="col-12">
 			<input asp-for="Name" class="form-control form__input" placeholder="Name" />

@@ -69,13 +69,8 @@ namespace MovieProMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Collection collection)
+        public async Task<IActionResult> Edit([Bind("Id,Name,Description")] Collection collection)
         {
-            if (id != collection.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -136,7 +131,7 @@ namespace MovieProMVC.Controllers
             var collection = await _context.Collection.FindAsync(id);
             _context.Collection.Remove(collection);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "MovieCollections");
+            return RedirectToAction("Index", "Collections");
         }
 
         private bool CollectionExists(int id)
