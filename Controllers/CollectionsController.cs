@@ -27,6 +27,7 @@ namespace MovieProMVC.Controllers
             var defaultCollectionName = _appSettings.MovieProSettings.DefaultCollection.Name;
             var collections = await _context.Collection
                 .Where(c => c.Name != defaultCollectionName)
+                .OrderBy(c => c.Id)
                 .ToListAsync();
 
             return View(collections);

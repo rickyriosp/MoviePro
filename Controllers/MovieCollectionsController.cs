@@ -22,7 +22,7 @@ namespace MovieProMVC.Controllers
         {
             id ??= (await _context.Collection.FirstOrDefaultAsync(c => c.Name.ToUpper() == "ALL")).Id;
 
-            ViewData["CollectionsId"] = new SelectList(_context.Collection, "Id", "Name", id);
+            ViewData["CollectionsId"] = new SelectList(_context.Collection.OrderBy(c => c.Id), "Id", "Name", id);
 
             var allMovieIds = await _context.Movie.Select(m => m.Id).ToListAsync();
 
