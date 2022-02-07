@@ -60,7 +60,7 @@ namespace MovieProMVC.Services
         private async Task SeedUsersAsync()
         {
             // If there are already Users in the system: do nothing
-            if (_userManager.Users.Any()) return;
+            //if (_userManager.Users.Any()) return;
 
             // Otherwise we want to create a few Users
             // Step 1: Create a new instance of user
