@@ -11,6 +11,53 @@
     ViewData["Title"] = "Movie Import";
 }
 
+<style>
+    .twitter-typeahead{
+        width: 100%;
+    }
+
+    .tt-hint {
+        color: #999 !important;
+    }
+
+    .tt-menu {
+      width: 422px;
+      margin: 12px 0;
+      padding: 8px 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 8px;
+         -moz-border-radius: 8px;
+              border-radius: 8px;
+      -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+         -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+              box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    }
+
+    .tt-suggestion {
+        padding: 3px 20px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .tt-suggestion:hover {
+        cursor: pointer;
+        color: #fff;
+        background-color: #0097cf;
+    }
+
+    .tt-suggestion.tt-cursor {
+        color: #fff;
+        background-color: #0097cf;
+
+    }
+
+    .tt-suggestion p + strong {
+        margin: 0;
+    }
+</style>
+
 <!-- page title -->
 <section class="section section--first section--bg" data-bg="../../img/section/section.jpg">
     <div class="container">
@@ -33,7 +80,7 @@
 </section>
 <!-- end page title -->
 
-<!-- collection name -->
+<!-- search bar -->
 <div class="content__head">
     <div class="container">
         <div class="row">
@@ -44,12 +91,12 @@
                 <!-- end content title -->
 
                 <!-- search -->
-                <form action="Import" class="header__search my-4" style="position: relative; bottom: 0;">
+                <form action="Import" class="header__search my-4" style="position: relative; bottom: 0; z-index: 100; overflow: visible;">
                     <div class="container px-0">
                         <div class="row">
                             <div class="col-12">
-                                <div class="header__search-content">
-                                    <input type="text" placeholder="Enter Movie Title ...">
+                                <div class="header__search-content" id="movieSearch">
+                                    <input type="text" placeholder="Enter Movie Title ..." class="typeahead">
                                     <button type="button">Import</button>
                                 </div>
                             </div>
@@ -61,7 +108,7 @@
         </div>
     </div>
 </div>
-<!-- end collection name -->
+<!-- end search bar -->
 
 <!-- catalog -->
 <div class="catalog">
@@ -110,3 +157,19 @@
     </div>
 </div>
 <!-- end catalog -->
+
+@section Scripts {
+    <script src="~/lib/typeahead.js/typeahead.bundle.min.js"></script>
+
+    <script>
+        let query = '@_tmdbMovieService.GenerateSearchRequestUri()';
+        query = query.replace(/amp;/g, "").replace("%25SEARCH", "%SEARCH");
+    </script>
+
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+	<script src="~/lib/select2/js/select2.js"></script>
+	<script src="~/js/admin.js"></script>
+	<script src="~/js/custom.js"></script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

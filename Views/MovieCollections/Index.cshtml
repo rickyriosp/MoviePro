@@ -90,20 +90,20 @@
 			        <!-- end dashbox -->
 
                     <!-- dashbox -->
-			        <div class="col-12 col-lg-2 d-flex">
+			        <div class="col-12 col-lg-2 mt-5 d-flex">
                         <div class="dashbox mx-auto my-4 my-sm-auto">
-				        <div class="row">
-                            <div class="col-6 col-sm-12">
-                                <button id="addToCollection" type="button" class="sidebar__user-btn" style="margin: auto;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256"><path d="M205.7,202.3a8.1,8.1,0,0,1,0,11.4,8.2,8.2,0,0,1-11.4,0l-80-80a8.1,8.1,0,0,1,0-11.4l80-80a8.1,8.1,0,0,1,11.4,11.4L131.3,128ZM51.3,128l74.4-74.3a8.1,8.1,0,0,0-11.4-11.4l-80,80a8.1,8.1,0,0,0,0,11.4l80,80a8.2,8.2,0,0,0,11.4,0,8.1,8.1,0,0,0,0-11.4Z"/></svg>
-                                </button>
+				            <div class="row">
+                                <div class="col-6 col-lg-12">
+                                    <button id="addToCollection" type="button" class="sidebar__user-btn" style="margin: auto;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256"><path d="M205.7,202.3a8.1,8.1,0,0,1,0,11.4,8.2,8.2,0,0,1-11.4,0l-80-80a8.1,8.1,0,0,1,0-11.4l80-80a8.1,8.1,0,0,1,11.4,11.4L131.3,128ZM51.3,128l74.4-74.3a8.1,8.1,0,0,0-11.4-11.4l-80,80a8.1,8.1,0,0,0,0,11.4l80,80a8.2,8.2,0,0,0,11.4,0,8.1,8.1,0,0,0,0-11.4Z"/></svg>
+                                    </button>
+                                </div>
+                                <div class="col-6 col-lg-12 mt-lg-5">
+                                    <button id="removeFromCollection" type="button" class="sidebar__user-btn" style="margin: auto;">
+                                        <svg xmlns="http://www.w3.org/2000/svg"  width="18" height="18" viewBox="0 0 256 256"><path d="M141.7,133.7l-80,80a8.2,8.2,0,0,1-11.4,0,8.1,8.1,0,0,1,0-11.4L124.7,128,50.3,53.7A8.1,8.1,0,0,1,61.7,42.3l80,80A8.1,8.1,0,0,1,141.7,133.7Zm80-11.4-80-80a8.1,8.1,0,0,0-11.4,11.4L204.7,128l-74.4,74.3a8.1,8.1,0,0,0,0,11.4,8.2,8.2,0,0,0,11.4,0l80-80A8.1,8.1,0,0,0,221.7,122.3Z"/></svg>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-6 col-sm-12 mt-sm-5">
-                                <button id="removeFromCollection" type="button" class="sidebar__user-btn" style="margin: auto;">
-                                    <svg xmlns="http://www.w3.org/2000/svg"  width="18" height="18" viewBox="0 0 256 256"><path d="M141.7,133.7l-80,80a8.2,8.2,0,0,1-11.4,0,8.1,8.1,0,0,1,0-11.4L124.7,128,50.3,53.7A8.1,8.1,0,0,1,61.7,42.3l80,80A8.1,8.1,0,0,1,141.7,133.7Zm80-11.4-80-80a8.1,8.1,0,0,0-11.4,11.4L204.7,128l-74.4,74.3a8.1,8.1,0,0,0,0,11.4,8.2,8.2,0,0,0,11.4,0l80-80A8.1,8.1,0,0,0,221.7,122.3Z"/></svg>
-                                </button>
-                            </div>
-                        </div>
                         </div>
 			        </div>
                     <!-- end dashbox -->
@@ -139,135 +139,7 @@
 	<script src="~/lib/select2/js/select2.full.min.js"></script>
 	<script src="~/lib/select2/js/select2.js"></script>
 	<script src="~/js/admin.js"></script>
-
-    <script>
-        function onSubmit () {
-            let collectionIndex = document.getElementById("id").selectedIndex;
-            if (collectionIndex == -1)
-            {
-                document.getElementById("id").selectedIndex = 0;
-                console.log(collectionIndex);
-            }
-
-            let select = document.getElementById("idsInCollection").getElementsByTagName("option");
-
-            for (let option of select) {
-                option.selected = "selected";
-            }
-        }
-
-        document.getElementById("Form").addEventListener("submit", onSubmit)
-
-        $(document).on("click", function(event){
-            let $trigger = $("#idsInCollection, #idsNotInCollection");
-            if($trigger !== event.target && !$trigger.has(event.target).length){
-                $("#idsInCollection, #idsNotInCollection").prop("selectedIndex", -1);
-            }
-        });
-
-        $('.CollectionId').on('change', function() {
-            let id = $('.CollectionId').val()
-            var url = '@Url.Action("Index", "MovieCollections", new { id = "1" })'.split("/");
-            url[3] = id;
-            url = url.join("/");
-
-            window.location.href = url;
-        });
-
-        $('#addToCollection').click(function(e) {
-            var selItem = $('#idsNotInCollection').prop('selectedIndex');
-            console.log(selItem);
-            if (selItem == -1) {
-                window.alert("You must first select a movie not in the collection.")
-            } else {
-                // Add to new list
-                $('#idsInCollection').append($('#idsNotInCollection')[0][selItem]);
-                // Remove from original list
-                let selected = $('#idsNotInCollection').val();
-                $(`#idsNotInCollection option[value=${selected}]`).remove();
-                // Uncheck selected items
-                $('#idsNotInCollection').prop('selectedIndex', -1);
-                $('#idsInCollection').prop('selectedIndex', -1);
-            }
-        });
-
-        $('#removeFromCollection').click(function(e) {
-            var selItem = $('#idsInCollection').prop('selectedIndex');
-            if (selItem == -1) {
-                window.alert("You must first select a movie in the collection.")
-            } else {
-                // Add to new list
-                $('#idsNotInCollection').append($('#idsInCollection')[0][selItem]);
-                // Remove from original list
-                let selected = $('#idsInCollection').val();
-                $(`#idsInCollection option[value=${selected}]`).remove();
-                // Uncheck selected items
-                $('#idsNotInCollection').prop('selectedIndex', -1);
-                $('#idsInCollection').prop('selectedIndex', -1);
-            }
-        });
-
-        $('#moveUpIn').click(function() {
-            let arr = $('#idsInCollection').children().toArray();
-            let selItem = $('#idsInCollection').prop('selectedIndex');
-
-            if (selItem == -1 || selItem == 0) {
-                //window.alert("You must first select a movie in the collection.")
-            } else {
-                let temp = arr[selItem];
-                arr[selItem] = arr[selItem - 1];
-                arr[selItem - 1] = temp;
-
-                $('#idsInCollection').empty().append(arr);
-            }
-        });
-
-        $('#moveUpNotIn').click(function() {
-            let arr = $('#idsNotInCollection').children().toArray();
-            let selItem = $('#idsNotInCollection').prop('selectedIndex');
-
-            if (selItem == -1 || selItem == 0) {
-                //window.alert("You must first select a movie in the collection.")
-            } else {
-                let temp = arr[selItem];
-                arr[selItem] = arr[selItem - 1];
-                arr[selItem - 1] = temp;
-
-                $('#idsNotInCollection').empty().append(arr);
-            }
-        });
-
-        $('#moveDownIn').click(function() {
-            let arr = $('#idsInCollection').children().toArray();
-            let selItem = $('#idsInCollection').prop('selectedIndex');
-
-            if (selItem == -1 || selItem == arr.length - 1) {
-                //window.alert("You must first select a movie in the collection.")
-            } else {
-                let temp = arr[selItem];
-                arr[selItem] = arr[selItem + 1];
-                arr[selItem + 1] = temp;
-
-                $('#idsInCollection').empty().append(arr);
-            }
-        });
-
-        $('#moveDownNotIn').click(function() {
-            let arr = $('#idsNotInCollection').children().toArray();
-            let selItem = $('#idsNotInCollection').prop('selectedIndex');
-
-            if (selItem == -1 || selItem == arr.length - 1) {
-                //window.alert("You must first select a movie in the collection.")
-            } else {
-                let temp = arr[selItem];
-                arr[selItem] = arr[selItem + 1];
-                arr[selItem + 1] = temp;
-
-                $('#idsNotInCollection').empty().append(arr);
-            }
-        });
-    </script>
-
+	<script src="~/js/custom.js"></script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

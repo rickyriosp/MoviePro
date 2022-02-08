@@ -257,5 +257,21 @@ namespace MovieProMVC.Services
 
             return movieGenres.ToArray();
         }
+
+        public string GenerateSearchRequestUri()
+        {
+            var query = $"{_appSettings.TMDBSettings.BaseUrl}/search/movie";
+            var queryParams = new Dictionary<string, string>()
+            {
+                { "api_key", _appSettings.MovieProSettings.TmdbApiKey },
+                { "language", _appSettings.TMDBSettings.QueryOptions.Language},
+                { "query", "%SEARCH" },
+                { "page", _appSettings.TMDBSettings.QueryOptions.Page }
+            };
+
+            var requestUri = QueryHelpers.AddQueryString(query, queryParams);
+
+            return requestUri;
+        }
     }
 }
