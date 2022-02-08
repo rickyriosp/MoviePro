@@ -9,7 +9,7 @@ namespace MovieProMVC.Models.Database
         public string Author { get; set; }
         [Display(Name = "Avatar")]
         public string AvatarPath { get; set; }
-        public int Rating { get; set; }
+        public float Rating { get; set; }
         public string Content { get; set; }
         public DateTime Created_at { get; set; }
         public DateTime Updated_at { get; set; }

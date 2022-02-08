@@ -21,36 +21,48 @@
     }
 
     .tt-menu {
-      width: 422px;
-      margin: 12px 0;
-      padding: 8px 0;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      -webkit-border-radius: 8px;
-         -moz-border-radius: 8px;
-              border-radius: 8px;
-      -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-         -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-              box-shadow: 0 5px 10px rgba(0,0,0,.2);
+      color: #fff;
+      /*padding: 0 40px 0 20px;*/
+      width: 100%;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
+      border-radius: 4px;
+      outline: none !important;
+      transition: 0.4s ease;
+    }
+
+    .tt-dataset {
+        width: 100%;
+        border: none;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
+        background-color: #2b2b31;
+        padding: 15px 0;
     }
 
     .tt-suggestion {
         padding: 3px 20px;
         font-size: 18px;
         line-height: 24px;
+        color: #999 !important;
     }
 
     .tt-suggestion:hover {
         cursor: pointer;
         color: #fff;
         background-color: #0097cf;
+        border-color: #ff55a5;
     }
 
     .tt-suggestion.tt-cursor {
         color: #fff;
         background-color: #0097cf;
 
+    }
+
+    .tt-suggestion strong {
+        color: #fff;
     }
 
     .tt-suggestion p + strong {
@@ -91,13 +103,14 @@
                 <!-- end content title -->
 
                 <!-- search -->
-                <form action="Import" class="header__search my-4" style="position: relative; bottom: 0; z-index: 100; overflow: visible;">
+                <form asp-action="Import" class="header__search my-4" style="position: relative; bottom: 0; z-index: 100; overflow: visible;">
                     <div class="container px-0">
                         <div class="row">
                             <div class="col-12">
                                 <div class="header__search-content" id="movieSearch">
+                                    <input type="hidden" id="movie-id" name="id" value="0" />
                                     <input type="text" placeholder="Enter Movie Title ..." class="typeahead">
-                                    <button type="button">Import</button>
+                                    <button type="submit">Import</button>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +132,7 @@
                 {
                     <!-- card -->
                     <div class="card card--list">
-                        <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="card__cover">
+                        <a class="card__cover" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" asp-route-local="true">
                             <img src="@_imageService.DecodeImage(@movie.Poster, @movie.PosterType)" alt="Movie Poster">
                             <span class="card__play">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.54,9,8.88,3.46a3.42,3.42,0,0,0-5.13,3V17.58A3.42,3.42,0,0,0,7.17,21a3.43,3.43,0,0,0,1.71-.46L18.54,15a3.42,3.42,0,0,0,0-5.92Zm-1,4.19L7.88,18.81a1.44,1.44,0,0,1-1.42,0,1.42,1.42,0,0,1-.71-1.23V6.42a1.42,1.42,0,0,1,.71-1.23A1.51,1.51,0,0,1,7.17,5a1.54,1.54,0,0,1,.71.19l9.66,5.58a1.42,1.42,0,0,1,0,2.46Z" /></svg>
@@ -127,7 +140,7 @@
                         </a>
 
                         <div class="card__content">
-                            <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h3>
+                            <h3 class="card__title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" asp-route-local="true">@movie.Title</a></h3>
                             <span class="card__category">
                                 @{
                                     @foreach (var genre in movie.Genres)
@@ -159,16 +172,12 @@
 <!-- end catalog -->
 
 @section Scripts {
-    <script src="~/lib/typeahead.js/typeahead.bundle.min.js"></script>
-
     <script>
         let query = '@_tmdbMovieService.GenerateSearchRequestUri()';
         query = query.replace(/amp;/g, "").replace("%25SEARCH", "%SEARCH");
     </script>
 
-    <script src="~/lib/select2/js/select2.full.min.js"></script>
-	<script src="~/lib/select2/js/select2.js"></script>
-	<script src="~/js/admin.js"></script>
+    <script src="~/lib/typeahead.js/typeahead.bundle.min.js"></script>
 	<script src="~/js/custom.js"></script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

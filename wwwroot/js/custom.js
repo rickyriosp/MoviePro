@@ -2,7 +2,7 @@
 /*-------------------- Movie Import --------------------*/
 // Confiugre Bloodhound
 let movieList = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    datumTokenizer: Bloodhound.tokenizers.whitespace('name', 'value'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
         url: query,                         // Coming from the razor view
@@ -16,7 +16,7 @@ let movieList = new Bloodhound({
 
             let results = [];
             arr.forEach(el => {
-                results.push(el.original_title);
+                results.push({ name: el.original_title, value: el.id});
             });
 
             return results;
@@ -34,14 +34,21 @@ $('#movieSearch .typeahead').typeahead(
     {
         name: 'movie-list',
         source: movieList,                  // suggestion engine is passed as the source
+        display: 'name',
         limit: 10,
         templates: {
             pending: function (query) {
-                return '<div>Loading...</div>';
+                return '<div class="tt-suggestion">Loading...</div>';
             }
         }
     }
 );
+
+$('.typeahead').on('typeahead:selected', function (evt, item) {
+    // do what you want with the item here
+    // set the hidden inputs value to the datum value eg. "21"
+    $('#movie-id').val(item.value);
+})
 
 /*-------------------- Movie Collections --------------------*/
 $('#Form').on('submit', onSubmit);

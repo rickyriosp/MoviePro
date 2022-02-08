@@ -36,7 +36,7 @@ namespace MovieProMVC.Services
             if (string.IsNullOrEmpty(actor.birthday))
                 actor.birthday = "Not Available";
             else
-                actor.birthday = DateTime.Parse(actor.birthday).ToString("MMM dd, yyyy");
+                actor.birthday = DateTime.Parse(actor.birthday).ToUniversalTime().ToString("MMM dd, yyyy");
 
             return actor;
         }
@@ -55,7 +55,7 @@ namespace MovieProMVC.Services
                     Overview = movie.overview,
                     RunTime = movie.runtime,
                     VoteAverage = movie.vote_average,
-                    ReleaseDate = DateTime.Parse(movie.release_date),
+                    ReleaseDate = DateTime.Parse(movie.release_date).ToUniversalTime(),
                     TrailerUrl = BuildTrailerPath(movie.videos),
                     Backdrop = await EncodeBackdropImageAsync(movie.backdrop_path),
                     BackdropType = BuildImageType(movie.backdrop_path),
@@ -137,8 +137,8 @@ namespace MovieProMVC.Services
                             AvatarPath = BuildAvatarImage(review.author_details.avatar_path),
                             Rating = review.author_details.rating ?? (int)MovieRating.NR,
                             Content = review.content,
-                            Created_at = DateTime.Parse(review.created_at),
-                            Updated_at = DateTime.Parse(review.updated_at),
+                            Created_at = DateTime.Parse(review.created_at).ToUniversalTime(),
+                            Updated_at = DateTime.Parse(review.updated_at).ToUniversalTime(),
                         });
                     });
                 }
