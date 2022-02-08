@@ -60,11 +60,7 @@ $(document).ready(function () {
 		placeholder: "Choose genre / genres"
 	});
 
-	$('#CollectionId').select2({
-		placeholder: "Choose collection"
-	});
-
-	$('.CollectionId').select2({
+	$('#collection-id').select2({
 		placeholder: "Choose collection"
 	});
 

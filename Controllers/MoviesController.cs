@@ -51,6 +51,8 @@ namespace MovieProMVC.Controllers
                 movie = await _context.Movie
                     .Include(m => m.Cast)
                     .Include(m => m.Crew)
+                    .Include(m => m.Reviews)
+                    .Include(m => m.MovieSimilar)
                     .FirstOrDefaultAsync(m => m.Id == id);
             }
             else

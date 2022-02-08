@@ -64,7 +64,7 @@
                     <div class="col-12">
                         <div class="row d-flex flex-row">
                             <div class="col-12 col-sm-9 mt-2">
-				                <select id="id" name="id" class="form-control js-example-basic-single mt-2 CollectionId" asp-items="@ViewBag.CollectionsId"></select>
+				                <select id="collection-id" name="id" class="form-control js-example-basic-single mt-2" asp-items="@ViewBag.CollectionsId"></select>
                             </div>
                             <div class="col-12 col-sm-3 mt-2">
                                 <a href="#modal-status" type="button" class="form__btn open-modal mt-0" style="width: 100%;">Add</a>
@@ -136,10 +136,22 @@
 <partial name="_ModalPartial" />
 
 @section Scripts {
+    <script src="~/lib/typeahead.js/typeahead.bundle.min.js"></script>
 	<script src="~/lib/select2/js/select2.full.min.js"></script>
 	<script src="~/lib/select2/js/select2.js"></script>
 	<script src="~/js/admin.js"></script>
 	<script src="~/js/custom.js"></script>
+
+    <script>
+        $('#collection-id').on('change', function () {
+            let id = $(this).val()
+            var url = '@Url.Action("Index", "MovieCollections", new { id = "1" })'.split("/");
+            url[3] = id;
+            url = url.join("/");
+
+            window.location.href = url;
+        });
+    </script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

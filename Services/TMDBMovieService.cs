@@ -148,6 +148,7 @@ namespace MovieProMVC.Services
 
             return movieSearch;
         }
+
         public async Task<MovieSearch> SearchMoviesSimilarAsync(int id, int count)
         {
             // Step 1: Setup a default instance of MovieSearch
