@@ -9,12 +9,12 @@ namespace MovieProMVC.Services
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-            SentrySdk.CaptureMessage($"databaseUrl: {databaseUrl}");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
         }
 
         private static string BuildConnectionString(string databaseUrl)
         {
+            SentrySdk.CaptureMessage($"databaseUrl: {databaseUrl}");
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');
             var builder = new Npgsql.NpgsqlConnectionStringBuilder
