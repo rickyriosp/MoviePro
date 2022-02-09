@@ -1,4 +1,45 @@
 ﻿
+/*-------------------- Library --------------------*/
+$('.library-carousel').owlCarousel({
+    mouseDrag: false,
+    touchDrag: false,
+    dots: false,
+    loop: true,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    autoplayHoverPause: true,
+    smartSpeed: 700,
+    margin: 20,
+    slideBy: 4,
+    responsive: {
+        0: {
+            items: 1,
+        },
+        576: {
+            items: 2,
+        },
+        768: {
+            items: 3,
+            margin: 30,
+        },
+        992: {
+            items: 4,
+            margin: 30,
+        },
+        1200: {
+            items: 4,
+            margin: 40
+        },
+    }
+});
+
+$('.library-carousel--next').on('click', function () {
+    $('.library-carousel').trigger('next.owl.carousel');
+});
+$('.library-carousel--prev').on('click', function () {
+    $('.library-carousel').trigger('prev.owl.carousel');
+});
+
 /*-------------------- Movie Import --------------------*/
 if (typeof query !== 'undefined') {
     // Confiugre Bloodhound

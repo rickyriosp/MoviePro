@@ -20,6 +20,8 @@ namespace MovieProMVC.Controllers
         private readonly IRemoteMovieService _tmdbMovieService;
         private readonly IDataMappingService _tmdbMappingService;
 
+        private Dictionary<int, int> _libraryPages;
+
         public MoviesController(IOptions<AppSettings> appSettings, ApplicationDbContext context, IImageService imageService, IRemoteMovieService tmdbMovieService, IDataMappingService tmdbMappingService)
         {
             _appSettings = appSettings.Value;
@@ -27,6 +29,8 @@ namespace MovieProMVC.Controllers
             _imageService = imageService;
             _tmdbMovieService = tmdbMovieService;
             _tmdbMappingService = tmdbMappingService;
+
+            _libraryPages = new Dictionary<int, int>();
         }
 
         // GET: Movies
@@ -297,13 +301,40 @@ namespace MovieProMVC.Controllers
 
         // GET: Movies/Library
         [Authorize(Roles = "Administrator, User")]
-        public async Task<IActionResult> Library(int? page)
+        public async Task<IActionResult> Library(int? collectionId, int? page)
         {
-            var pageNumber = page ?? 1;
-            var pageSize = 12;
-            var movies = await _context.Movie.ToPagedListAsync(pageNumber, pageSize);
+            ViewData["CollectionsId"] = _context.Collection.Where(c => c.Name.ToUpper() != "ALL").OrderBy(c => c.Id);
+            
+            var output = new List<IPagedList<MovieCollection>>();
+            
+            var allMovieCollections = await _context.MovieCollection.Include(m => m.Movie).Include(c => c.Collection).ToListAsync();
 
-            return View(movies);
+            foreach (Collection collection in ViewBag.CollectionsId)
+            {
+                var pageNumber = 1;
+                var pageSize = 6;
+
+                if (collection.Id == collectionId)
+                {
+                    _libraryPages[collection.Id] = (int)page;
+                    // Set navigation property for html script
+                    ViewData["CollectionSelected"] = $"collection-{collection.Id}";
+                }
+
+                if (_libraryPages.TryGetValue(collection.Id, out pageNumber) == false)
+                {
+                    pageNumber = 1;
+                }
+
+                var movieCollection = allMovieCollections
+                    .Where(c => c.CollectionId == collection.Id)
+                    .OrderBy(c => c.Order)
+                    .ToPagedList(pageNumber, pageSize);
+
+                output.Add(movieCollection);
+            }
+
+            return View(output);
         }
 
 
