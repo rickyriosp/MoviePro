@@ -303,11 +303,12 @@ namespace MovieProMVC.Controllers
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Library(int? collectionId, int? page)
         {
-            ViewData["CollectionsId"] = _context.Collection.Where(c => c.Name.ToUpper() != "ALL").OrderBy(c => c.Id);
+            ViewData["CollectionsId"] = _context.Collection
+                .Where(c => c.Name.ToUpper() != "ALL")
+                .OrderBy(c => c.Id)
+                .ToList();
             
             var output = new List<IPagedList<MovieCollection>>();
-            
-            var allMovieCollections = await _context.MovieCollection.Include(m => m.Movie).Include(c => c.Collection).ToListAsync();
 
             foreach (Collection collection in ViewBag.CollectionsId)
             {
@@ -326,7 +327,9 @@ namespace MovieProMVC.Controllers
                     pageNumber = 1;
                 }
 
-                var movieCollection = allMovieCollections
+                var movieCollection = _context.MovieCollection
+                    .Include(m => m.Movie)
+                    .Include(c => c.Collection)
                     .Where(c => c.CollectionId == collection.Id)
                     .OrderBy(c => c.Order)
                     .ToPagedList(pageNumber, pageSize);
@@ -336,7 +339,6 @@ namespace MovieProMVC.Controllers
 
             return View(output);
         }
-
 
         private bool MovieExists(int id)
         {
