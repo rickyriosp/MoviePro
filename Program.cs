@@ -58,6 +58,8 @@ builder.WebHost.UseSentry(o =>
     // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
     // We recommend adjusting this value in production.
     o.TracesSampleRate = 1.0;
+    // Add this to the SDK initialization callback to track the release number
+    o.Release = "moviepro-mvc@1.0.0";
 });
 
 var app = builder.Build();

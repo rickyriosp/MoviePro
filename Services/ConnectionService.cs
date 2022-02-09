@@ -1,4 +1,6 @@
-﻿namespace MovieProMVC.Services
+﻿using Sentry;
+
+namespace MovieProMVC.Services
 {
     public class ConnectionService
     {
@@ -7,6 +9,7 @@
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
+            SentrySdk.CaptureMessage($"databaseUrl: {databaseUrl}");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
         }
 
