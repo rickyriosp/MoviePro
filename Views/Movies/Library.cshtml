@@ -56,7 +56,7 @@
             <div class="row row--grid">
                 @foreach (var pagedList in Model)
                 {
-                    if (pagedList.First().CollectionId == collection.Id)
+                    if (pagedList.Count > 0 && pagedList.First().CollectionId == collection.Id)
                     {
                         foreach (var movieCollection in pagedList)
                         {

@@ -331,7 +331,6 @@ namespace MovieProMVC.Controllers
                     .Include(m => m.Movie)
                     .Include(c => c.Collection)
                     .Where(c => c.CollectionId == collection.Id)
-                    .DefaultIfEmpty()
                     .OrderBy(c => c.Order)
                     .ToPagedList(pageNumber, pageSize);
 

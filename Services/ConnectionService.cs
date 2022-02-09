@@ -14,7 +14,6 @@ namespace MovieProMVC.Services
 
         private static string BuildConnectionString(string databaseUrl)
         {
-            SentrySdk.CaptureMessage($"databaseUrl: {databaseUrl}");
             var databaseUri = new Uri(databaseUrl);
             var userInfo = databaseUri.UserInfo.Split(':');
             var builder = new Npgsql.NpgsqlConnectionStringBuilder
