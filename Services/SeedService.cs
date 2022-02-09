@@ -5,6 +5,7 @@ using MovieProMVC.Data;
 using MovieProMVC.Enums;
 using MovieProMVC.Models.Database;
 using MovieProMVC.Models.Settings;
+using Sentry;
 
 namespace MovieProMVC.Services
 {
@@ -25,17 +26,24 @@ namespace MovieProMVC.Services
 
         public async Task ManageDataAsync()
         {
-            // Task 1: Create DB from the Migrations
-            await UpdateDatabaseAsync();
+            try
+            {
+                // Task 1: Create DB from the Migrations
+                await UpdateDatabaseAsync();
 
-            // Task 2: Seed a few Roles into the system
-            await SeedRolesAsync();
+                // Task 2: Seed a few Roles into the system
+                await SeedRolesAsync();
 
-            // Task 3: Seed a few Users into the system
-            await SeedUsersAsync();
+                // Task 3: Seed a few Users into the system
+                await SeedUsersAsync();
 
-            // Task 4: Seed default Collection into the system
-            await SeedCollectionsAsync();
+                // Task 4: Seed default Collection into the system
+                await SeedCollectionsAsync();
+            }
+            catch (Exception err)
+            {
+                SentrySdk.CaptureException(err);
+            }
         }
 
         private async Task UpdateDatabaseAsync()

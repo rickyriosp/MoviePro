@@ -5,6 +5,7 @@ using MovieProMVC.Models.Settings;
 using MovieProMVC.Models.ViewModels;
 using MovieProMVC.Services;
 using MovieProMVC.Services.Interfaces;
+using Sentry;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,17 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 // Register our EmailService
 builder.Services.AddScoped<IMovieEmailSender, EmailService>();
 
+// Add Sentry.io package
+builder.WebHost.UseSentry(o =>
+{
+    o.Dsn = "https://174aea71b0104546bf25869198b012b6@o1139830.ingest.sentry.io/6196369";
+    // When configuring for the first time, to see what the SDK is doing:
+    o.Debug = true;
+    // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+    // We recommend adjusting this value in production.
+    o.TracesSampleRate = 1.0;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,6 +84,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Enable automatic tracing integration.
+// If running with .NET 5 or below, make sure to put this middleware
+// right after `UseRouting()`.
+app.UseSentryTracing();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -84,4 +101,5 @@ app.MapRazorPages();
 var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedService>();
 await dataService.ManageDataAsync();
 
+SentrySdk.CaptureMessage("Hello Sentry, MoviePro application launched");
 app.Run();
