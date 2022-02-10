@@ -105,7 +105,7 @@ namespace MovieProMVC.Services
                 var similarMovies = movie.similar.results.OrderByDescending(m => m.popularity)
                     .GroupBy(m => m.id)
                     .Select(g => g.First())
-                    .Take(10)
+                    .Take(8)
                     .ToList();
 
                 similarMovies.ForEach(similar =>

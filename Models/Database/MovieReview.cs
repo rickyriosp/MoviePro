@@ -5,6 +5,7 @@ namespace MovieProMVC.Models.Database
     public class MovieReview
     {
         public int Id { get; set; }
+        public int MovieId { get; set; }
         public string ReviewId { get; set; }
         public string Author { get; set; }
         [Display(Name = "Avatar")]

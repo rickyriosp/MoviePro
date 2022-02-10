@@ -56,12 +56,32 @@ namespace MovieProMVC.Controllers
                 {
                     // Get the Movie data straight from the DB
                     movie = await _context.Movie
-                        .Include(m => m.Cast)
-                        .Include(m => m.Crew)
+                        //.Include(m => m.Cast)
+                        //.Include(m => m.Crew)
                         //.Include(m => m.Reviews)
-                        .Include(m => m.MovieSimilar)
+                        //.Include(m => m.MovieSimilar)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(m => m.Id == id);
+
+                    var cast = await _context.Cast
+                        .Where(c => c.MovieId == movie.Id)
+                        .ToListAsync();
+                    ViewData["Cast"] = cast;
+
+                    var crew = await _context.Crew
+                        .Where(c => c.MovieId == movie.Id)
+                        .ToListAsync();
+                    ViewData["Crew"] = crew;
+
+                    var reviews = await _context.Review
+                        .Where(r => r.MovieId == movie.Id)
+                        .ToListAsync();
+                    ViewData["Reviews"] = reviews;
+
+                    var similar = await _context.Similar
+                        .Where(s => s.MovieId == movie.Id)
+                        .ToListAsync();
+                    ViewData["Similar"] = similar;
                 }
                 catch (Exception err)
                 {

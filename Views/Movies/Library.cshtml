@@ -117,10 +117,13 @@
 }
 
 @section Scripts {
-    <script>
-        $('#@ViewBag.CollectionSelected')[0].scrollIntoView({
-            behavior: "smooth", // or "auto" or "instant"
-            block: "start"      // or "end"
-        });
-    </script>
+    @if (ViewBag.CollectionSelected != null)
+    {
+        <script>
+                $('#@ViewBag.CollectionSelected')[0].scrollIntoView({
+                    behavior: "smooth", // or "auto" or "instant"
+                    block: "start"      // or "end"
+                });
+        </script>
+    }
 }
