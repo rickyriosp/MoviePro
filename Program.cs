@@ -104,5 +104,7 @@ app.MapRazorPages();
 var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedService>();
 await dataService.ManageDataAsync();
 
-SentrySdk.CaptureMessage("Hello Sentry, MoviePro application launched");
+// To test if Sentry is correctly configure run the following command
+//SentrySdk.CaptureMessage("Hello Sentry, MoviePro application launched");
+
 app.Run();

@@ -58,7 +58,7 @@ namespace MovieProMVC.Controllers
                     movie = await _context.Movie
                         .Include(m => m.Cast)
                         .Include(m => m.Crew)
-                        .Include(m => m.Reviews)
+                        //.Include(m => m.Reviews)
                         .Include(m => m.MovieSimilar)
                         .AsNoTracking()
                         .FirstOrDefaultAsync(m => m.Id == id);
@@ -122,8 +122,12 @@ namespace MovieProMVC.Controllers
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
 
-                await AddToMovieCollection(movie.Id, _appSettings.MovieProSettings.DefaultCollection.Name);
                 await AddToMovieCollection(movie.Id, collectionId);
+                
+                if (_context.Collection.First(c => c.Name.ToUpper() == _appSettings.MovieProSettings.DefaultCollection.Name.ToUpper()).Id != collectionId)
+                {
+                    await AddToMovieCollection(movie.Id, _appSettings.MovieProSettings.DefaultCollection.Name);
+                }
 
                 return RedirectToAction("Index", "MovieCollections");
             }
