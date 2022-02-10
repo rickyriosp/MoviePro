@@ -32,6 +32,7 @@ namespace MovieProMVC.Controllers
                 CustomCollections = await _context.Collection
                     .Include(c => c.MovieCollections)
                     .ThenInclude(mc => mc.Movie)
+                    .AsNoTracking()
                     .ToListAsync(),
                 NowPlaying = await _tmdbMovieService.SearchMoviesAsync(Enums.MovieCategory.now_playing, count),
                 Popular = await _tmdbMovieService.SearchMoviesAsync(Enums.MovieCategory.popular, count),

@@ -69,7 +69,7 @@ namespace MovieProMVC.Services
                 var castMembers = movie.credits.cast.OrderByDescending(c => c.popularity)
                     .GroupBy(c => c.cast_id)
                     .Select(g => g.FirstOrDefault())
-                    .Take(20)
+                    .Take(10)
                     .ToList();
 
                 castMembers.ForEach(member =>
@@ -87,7 +87,7 @@ namespace MovieProMVC.Services
                 var crewMembers = movie.credits.crew.OrderByDescending(c => c.popularity)
                     .GroupBy(c => c.id)
                     .Select(g => g.First())
-                    .Take(20)
+                    .Take(10)
                     .ToList();
 
                 crewMembers.ForEach(member =>
@@ -112,7 +112,7 @@ namespace MovieProMVC.Services
                 {
                     newMovie.MovieSimilar.Add(new MovieSimilar()
                     {
-                        MovieId = similar.id,
+                        RemoteId = similar.id,
                         Title = similar.title,
                         VoteAverage = similar.vote_average,
                         Genres = _tmdbMovieService.GetMovieGenresByIdAsync(similar.genre_ids),

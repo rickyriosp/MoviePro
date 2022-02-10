@@ -7,6 +7,7 @@ namespace MovieProMVC.Models.Database
     {
         public int Id { get; set; }
         public int MovieId { get; set; }
+        public int RemoteId { get; set; }
         public string Title { get; set; }
         public float VoteAverage { get; set; }
         public MovieGenre[] Genres { get; set; }

@@ -20,15 +20,16 @@ namespace MovieProMVC.Controllers
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Index(int? id)
         {
-            id ??= (await _context.Collection.FirstOrDefaultAsync(c => c.Name.ToUpper() == "ALL")).Id;
+            id ??= (await _context.Collection.AsNoTracking().FirstOrDefaultAsync(c => c.Name.ToUpper() == "ALL")).Id;
 
-            ViewData["CollectionsId"] = new SelectList(_context.Collection.OrderBy(c => c.Id), "Id", "Name", id);
+            ViewData["CollectionsId"] = new SelectList(_context.Collection.OrderBy(c => c.Id).AsNoTracking().ToList(), "Id", "Name", id);
 
-            var allMovieIds = await _context.Movie.Select(m => m.Id).ToListAsync();
+            var allMovieIds = await _context.Movie.AsNoTracking().Select(m => m.Id).ToListAsync();
 
             var movieIdsInCollection = await _context.MovieCollection
                 .Where(m => m.CollectionId == id)
                 .OrderBy(m => m.Order)
+                .AsNoTracking()
                 .Select(m => m.MovieId)
                 .ToListAsync();
 
@@ -40,8 +41,8 @@ namespace MovieProMVC.Controllers
             ViewData["IdsInCollection"] = new MultiSelectList(moviesInCollection, "Id", "Title");
 
             var moviesNotInCollection = await _context.Movie
-                .AsNoTracking()
                 .Where(m => movieIdsNotInCollection.Contains(m.Id))
+                .AsNoTracking()
                 .ToListAsync();
 
             ViewData["IdsNotInCollection"] = new MultiSelectList(moviesNotInCollection, "Id", "Title");

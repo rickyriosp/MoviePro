@@ -8,6 +8,7 @@ using MovieProMVC.Enums;
 using MovieProMVC.Models.Database;
 using MovieProMVC.Models.Settings;
 using MovieProMVC.Services.Interfaces;
+using Sentry;
 using X.PagedList;
 
 namespace MovieProMVC.Controllers
@@ -36,7 +37,7 @@ namespace MovieProMVC.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movie.ToListAsync());
+            return View(await _context.Movie.AsNoTracking().ToListAsync());
         }
 
         // GET: Movies/Details/5
@@ -47,17 +48,25 @@ namespace MovieProMVC.Controllers
                 return NotFound();
             }
 
-            Movie movie = new();
+            Movie? movie = new();
 
             if (local is true)
             {
-                // Get the Movie data straight from the DB
-                movie = await _context.Movie
-                    .Include(m => m.Cast)
-                    .Include(m => m.Crew)
-                    .Include(m => m.Reviews)
-                    .Include(m => m.MovieSimilar)
-                    .FirstOrDefaultAsync(m => m.Id == id);
+                try
+                {
+                    // Get the Movie data straight from the DB
+                    movie = await _context.Movie
+                        .Include(m => m.Cast)
+                        .Include(m => m.Crew)
+                        .Include(m => m.Reviews)
+                        .Include(m => m.MovieSimilar)
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(m => m.Id == id);
+                }
+                catch (Exception err)
+                {
+                    SentrySdk.CaptureException(err);
+                }
             }
             else
             {
@@ -80,7 +89,7 @@ namespace MovieProMVC.Controllers
         [Authorize(Roles = "Administrator, User")]
         public IActionResult Create()
         {
-            ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
+            ViewData["CollectionId"] = new SelectList(_context.Collection.AsNoTracking().ToList(), "Id", "Name");
 
             return View();
         }
@@ -113,6 +122,7 @@ namespace MovieProMVC.Controllers
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
 
+                await AddToMovieCollection(movie.Id, _appSettings.MovieProSettings.DefaultCollection.Name);
                 await AddToMovieCollection(movie.Id, collectionId);
 
                 return RedirectToAction("Index", "MovieCollections");
@@ -128,17 +138,21 @@ namespace MovieProMVC.Controllers
             {
                 var pageNumber = 1;
                 var pageSize = 12;
-                var movies = await _context.Movie.ToPagedListAsync(pageNumber, pageSize);
+                var movies = await _context.Movie
+                    .AsNoTracking()
+                    .ToPagedListAsync(pageNumber, pageSize);
+
                 return View("EditIndex", movies);
             }
 
-            ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
+            ViewData["CollectionId"] = new SelectList(_context.Collection.AsNoTracking(), "Id", "Name");
 
             var movie = await _context.Movie.FindAsync(id);
             if (movie == null)
             {
                 return NotFound();
             }
+
             return View(movie);
         }
 
@@ -228,7 +242,7 @@ namespace MovieProMVC.Controllers
                 return RedirectToAction("Details", "Movies", new { id = movie.Id, local = true });
             }
 
-            ViewData["CollectionId"] = new SelectList(_context.Collection, "Id", "Name");
+            ViewData["CollectionId"] = new SelectList(_context.Collection.AsNoTracking().ToList(), "Id", "Name");
 
             return View(movie);
         }
@@ -243,6 +257,7 @@ namespace MovieProMVC.Controllers
             }
 
             var movie = await _context.Movie
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null)
             {
@@ -267,7 +282,9 @@ namespace MovieProMVC.Controllers
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Import()
         {
-            var movies = await _context.Movie.ToListAsync();
+            var movies = await _context.Movie
+                .AsNoTracking()
+                .ToListAsync();
             return View(movies);
         }
 
@@ -279,7 +296,9 @@ namespace MovieProMVC.Controllers
             // If we already have this movie we can just warn the user instead of importing it again
             if (_context.Movie.Any(m => m.MovieId == id))
             {
-                var localMovie = await _context.Movie.FirstOrDefaultAsync(m => m.MovieId == id);
+                var localMovie = await _context.Movie
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.MovieId == id);
                 return RedirectToAction("Details", "Movies", new { id = localMovie.Id, local = true });
             }
 
@@ -306,6 +325,7 @@ namespace MovieProMVC.Controllers
             ViewData["CollectionsId"] = _context.Collection
                 .Where(c => c.Name.ToUpper() != "ALL")
                 .OrderBy(c => c.Id)
+                .AsNoTracking()
                 .ToList();
             
             var output = new List<IPagedList<MovieCollection>>();
@@ -332,6 +352,7 @@ namespace MovieProMVC.Controllers
                     .Include(c => c.Collection)
                     .Where(c => c.CollectionId == collection.Id)
                     .OrderBy(c => c.Order)
+                    .AsNoTracking()
                     .ToPagedList(pageNumber, pageSize);
 
                 output.Add(movieCollection);
@@ -347,7 +368,10 @@ namespace MovieProMVC.Controllers
 
         private async Task AddToMovieCollection(int movieId, string collectionName)
         {
-            var collection = await _context.Collection.FirstOrDefaultAsync(c => c.Name == collectionName);
+            var collection = await _context.Collection
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Name == collectionName);
+            
             _context.Add(
                 new MovieCollection()
                 {

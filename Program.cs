@@ -14,12 +14,12 @@ builder.WebHost.UseSentry(o =>
 {
     o.Dsn = "https://174aea71b0104546bf25869198b012b6@o1139830.ingest.sentry.io/6196369";
     // When configuring for the first time, to see what the SDK is doing:
-    o.Debug = true;
+    //o.Debug = true;
     // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
     // We recommend adjusting this value in production.
     o.TracesSampleRate = 1.0;
     // Add this to the SDK initialization callback to track the release number
-    o.Release = "moviepro-mvc@1.0.0";
+    o.Release = "moviepro-mvc@1.0.1";
 });
 
 // Add services to the container.

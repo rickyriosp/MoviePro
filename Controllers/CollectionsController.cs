@@ -28,6 +28,7 @@ namespace MovieProMVC.Controllers
             var collections = await _context.Collection
                 .Where(c => c.Name != defaultCollectionName)
                 .OrderBy(c => c.Id)
+                .AsNoTracking()
                 .ToListAsync();
 
             return View(collections);
@@ -110,7 +111,9 @@ namespace MovieProMVC.Controllers
             }
 
             var collection = await _context.Collection
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (collection == null)
             {
                 return NotFound();
