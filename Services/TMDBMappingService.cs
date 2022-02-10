@@ -69,7 +69,7 @@ namespace MovieProMVC.Services
                 var castMembers = movie.credits.cast.OrderByDescending(c => c.popularity)
                     .GroupBy(c => c.cast_id)
                     .Select(g => g.FirstOrDefault())
-                    .Take(10)
+                    .Take(12)
                     .ToList();
 
                 castMembers.ForEach(member =>
@@ -87,7 +87,7 @@ namespace MovieProMVC.Services
                 var crewMembers = movie.credits.crew.OrderByDescending(c => c.popularity)
                     .GroupBy(c => c.id)
                     .Select(g => g.First())
-                    .Take(10)
+                    .Take(12)
                     .ToList();
 
                 crewMembers.ForEach(member =>

@@ -142,7 +142,7 @@
 							<div class="col-12">
 								<div class="comments">
 									<ul class="row comments__list">
-										@foreach (var actor in ((ICollection<MovieCast>)@ViewBag.Cast).Take(8))
+										@foreach (var actor in @Model.Cast.Take(8))
 										{
 											<!-- card -->
 											<li class="comments__item col-6 col-sm-4 col-lg-3">
@@ -185,7 +185,7 @@
 							<div class="col-12">
 								<div class="comments">
 									<ul class="row comments__list">
-										@foreach (var crew in ((ICollection<MovieCrew>)@ViewBag.Crew).Take(8))
+										@foreach (var crew in @Model.Crew.Take(8))
 										{
 											<!-- card -->
 											<li class="comments__item col-6 col-sm-4 col-lg-3">
@@ -228,7 +228,7 @@
 							<div class="col-12">
 								<div class="reviews">
 									<ul class="reviews__list">
-										@foreach (var review in @ViewBag.Reviews)
+										@foreach (var review in @Model.Reviews)
 										{
 											<!-- card -->
 											<li class="reviews__item">
@@ -270,7 +270,7 @@
 					</div>
 					<!-- end section title -->
 
-					@foreach (var similar in ((ICollection<MovieSimilar>)@ViewBag.Similar).Take(6))
+					@foreach (var similar in @Model.MovieSimilar.Take(6))
 					{
 						<!-- card -->
 						<div class="col-6 col-sm-4 col-lg-6">
