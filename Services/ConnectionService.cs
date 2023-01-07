@@ -9,9 +9,6 @@ namespace MovieProMVC.Services
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-            // If need to connect to prod db in development include the db url in project secrets
-            databaseUrl = configuration.GetValue<string>( "DATABASE_URL");
-
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
         }
 
