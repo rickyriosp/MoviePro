@@ -23,7 +23,7 @@ namespace MovieProMVC.Services
                 Username = userInfo[0],
                 Password = userInfo[1],
                 Database = databaseUri.LocalPath.TrimStart('/'),
-                SslMode = Npgsql.SslMode.Require,
+                SslMode = Npgsql.SslMode.Prefer,
                 TrustServerCertificate = true
             };
             return builder.ToString();
