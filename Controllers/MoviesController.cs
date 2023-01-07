@@ -327,11 +327,11 @@ namespace MovieProMVC.Controllers
         [Authorize(Roles = "Administrator, User")]
         public async Task<IActionResult> Library(int? collectionId, int? page)
         {
-            ViewData["CollectionsId"] = _context.Collection
+            ViewData["CollectionsId"] = await _context.Collection
                 .Where(c => c.Name.ToUpper() != "ALL")
                 .OrderBy(c => c.Id)
                 .AsNoTracking()
-                .ToList();
+                .ToListAsync();
             
             var output = new List<IPagedList<MovieCollection>>();
 
@@ -352,13 +352,13 @@ namespace MovieProMVC.Controllers
                     pageNumber = 1;
                 }
 
-                var movieCollection = _context.MovieCollection
+                var movieCollection = await _context.MovieCollection
                     .Include(m => m.Movie)
                     .Include(c => c.Collection)
                     .Where(c => c.CollectionId == collection.Id)
                     .OrderBy(c => c.Order)
                     .AsNoTracking()
-                    .ToPagedList(pageNumber, pageSize);
+                    .ToPagedListAsync(pageNumber, pageSize);
 
                 output.Add(movieCollection);
             }
